@@ -8,6 +8,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>네일샵 회원기록부</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="회원기록부">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#FBF7F4">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
@@ -57,6 +62,11 @@
   h1, h2, h3 { font-family: 'Fraunces', Georgia, serif; margin: 0; }
   .topbar { padding: 20px 20px 8px; max-width: 900px; margin: 0 auto; }
   .topbar h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+  .topbar { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+  .backup-btns { display: flex; gap: 6px; }
+  .backup-btn { font-family: inherit; font-size: 12px; font-weight: 600; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text-muted); cursor: pointer; }
+  .backup-hint { width: 100%; font-size: 12px; color: var(--text-muted); }
+  .backup-hint.warn { color: var(--danger); }
   .tabs { display: flex; gap: 20px; padding: 8px 20px 0; border-bottom: 1px solid var(--border); max-width: 900px; margin: 0 auto; }
   .tab-btn {
     padding: 8px 2px 12px; background: none; border: none; font-size: 15px; font-weight: 600;
@@ -199,7 +209,7 @@
 </head>
 <body>
 <div id="app"></div>
-<script id="app-data" type="application/json">{"customers":[{"id":"mucfw874g4dok","name":"하창재","phone":"01068636676","firstVisit":"2026-09-22","memo":"","type":"member","createdAt":1790067372160},{"id":"mucl8z7kxjjsy","name":"이경은","phone":"01043658777","firstVisit":"2026-09-22","memo":"제거","type":"member","createdAt":1790076365120},{"id":"mudaamhrlyits","name":"송주엽","phone":"01085826336","firstVisit":"2026-09-23","memo":"","type":"nonmember","createdAt":1790118432351},{"id":"mudaaxaw47fz4","name":"조미향","phone":"01085826336","firstVisit":"2026-09-23","memo":"","type":"member","createdAt":1790118446360},{"id":"mudaer99813qi","name":"박진한","phone":"01056867354","firstVisit":"2026-09-23","memo":"","type":"member","createdAt":1790118625149}],"sales":[{"id":"muc6vnutpcvad","date":"2026-09-22","type":"회원","isMembership":true,"customerId":"muc6vd56vrk1p","customerName":"송주엽","treatment":"MEMBERSHIP","amount":500000,"payment":"계좌이체","memo":"","createdAt":1790052229253,"chargeLogId":"muc6vnusryjfo"},{"id":"mucahxe2pl02m","date":"2026-09-22","type":"회원","isMembership":true,"customerId":"mucahm4ysv0l6","customerName":"하창재","treatment":"MEMBERSHIP","amount":500000,"payment":"계좌이체","memo":"","createdAt":1790058306890,"chargeLogId":"mucahxe235iam"},{"id":"mucfelgi0l692","date":"2026-09-22","type":"회원","isMembership":true,"customerId":"muce6g4kygae5","customerName":"하창재","treatment":"MEMBERSHIP","amount":500000,"payment":"계좌이체","memo":"","createdAt":1790066549538,"chargeLogId":"mucfelgi2u7x0"}],"reservations":[{"id":"mucldbzg88wwl","date":"2026-09-22","time":"12:30","customerId":"mucl8z7kxjjsy","customerName":"이경은","phone":"01043658777","treatment":"","memo":"케어","createdAt":1790076568300},{"id":"mud9rbg8e1n33","date":"2026-09-21","time":"12:00","customerId":"mucfw874g4dok","customerName":"하창재","phone":"01068636676","treatment":"기본케어, 기본(원컬러)","memo":null,"createdAt":1790117531577},{"id":"mudb3v3u42idt","date":"2026-09-26","time":"12:00","customerId":"mudaamhrlyits","customerName":"송주엽","phone":"01085826336","treatment":"케어","memo":"","createdAt":1790119796538}],"chargeLogs":[{"id":"muc2okims29qu","customerId":"muc27vzpp0lyn","type":"charge","date":"2026-09-22","amount":500000,"memo":"","createdAt":1790045179871},{"id":"muc3l7k391vue","customerId":"muc27vzpp0lyn","type":"deduct","date":"2026-09-22","amount":150000,"memo":"사용","createdAt":1790046702723},{"id":"muc3rieolunwo","customerId":"muc27vzpp0lyn","type":"deduct","date":"2026-09-22","amount":150000,"memo":"젤네일","createdAt":1790046996720},{"id":"muc42pr4jfsvu","customerId":"muc4114i8nkca","type":"charge","date":"2026-09-22","amount":500000,"memo":"","createdAt":1790047519457},{"id":"muc42yx3gzdvc","customerId":"muc40gigyiql4","type":"charge","date":"2026-09-22","amount":500000,"memo":"","createdAt":1790047531335},{"id":"muc4as7ud0zhw","customerId":"muc40gigyiql4","type":"deduct","date":"2026-09-22","amount":150000,"memo":"제거","createdAt":1790047895898},{"id":"muc6vnusryjfo","customerId":"muc6vd56vrk1p","type":"charge","date":"2026-09-22","amount":500000,"memo":"","createdAt":1790052229253},{"id":"mucahxe235iam","customerId":"mucahm4ysv0l6","type":"charge","date":"2026-09-22","amount":500000,"memo":"","createdAt":1790058306890},{"id":"mucfelgi2u7x0","customerId":"muce6g4kygae5","type":"charge","date":"2026-09-22","amount":500000,"memo":"","createdAt":1790066549538}]}</script>
+<script id="app-data" type="application/json">{"customers":[],"sales":[],"reservations":[],"chargeLogs":[]}</script>
 <script id="app-script">var HEAD_HTML = `
 
 
@@ -207,6 +217,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>네일샵 회원기록부</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="회원기록부">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#FBF7F4">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
@@ -256,6 +271,11 @@
   h1, h2, h3 { font-family: 'Fraunces', Georgia, serif; margin: 0; }
   .topbar { padding: 20px 20px 8px; max-width: 900px; margin: 0 auto; }
   .topbar h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+  .topbar { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+  .backup-btns { display: flex; gap: 6px; }
+  .backup-btn { font-family: inherit; font-size: 12px; font-weight: 600; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text-muted); cursor: pointer; }
+  .backup-hint { width: 100%; font-size: 12px; color: var(--text-muted); }
+  .backup-hint.warn { color: var(--danger); }
   .tabs { display: flex; gap: 20px; padding: 8px 20px 0; border-bottom: 1px solid var(--border); max-width: 900px; margin: 0 auto; }
   .tab-btn {
     padding: 8px 2px 12px; background: none; border: none; font-size: 15px; font-weight: 600;
@@ -397,11 +417,20 @@
 `;
 
 
+var STANDALONE = !(window.claude && window.claude.use);
+var STANDALONE_KEY = 'ns_full_state_v1';
+
 var state = { customers: [], sales: [] };
 try {
   var raw = document.getElementById('app-data').textContent;
   if (raw && raw.trim()) state = JSON.parse(raw);
 } catch (e) {}
+if (STANDALONE) {
+  try {
+    var savedLocal = localStorage.getItem(STANDALONE_KEY);
+    if (savedLocal) state = JSON.parse(savedLocal);
+  } catch (e) {}
+}
 if (!state.customers) state.customers = [];
 if (!state.sales) state.sales = [];
 if (!state.reservations) state.reservations = [];
@@ -722,12 +751,72 @@ function renderStatsRefControl() {
 
 function renderHeader() {
   return '' +
-  '<header class="topbar"><h1>네일샵 회원기록부</h1></header>' +
+  '<header class="topbar"><h1>네일샵 회원기록부</h1>' +
+    (STANDALONE ? '<div class="backup-btns"><button class="backup-btn" data-action="export-backup">백업</button><button class="backup-btn" data-action="import-backup">복원</button></div>' + renderBackupHint() : '') +
+  '</header>' +
   '<nav class="tabs">' +
     '<button class="tab-btn ' + (ui.tab === 'calendar' || ui.tab === 'today' ? 'active' : '') + '" data-action="switch-tab" data-tab="calendar">예약 캘린더</button>' +
     '<button class="tab-btn ' + (ui.tab === 'members' ? 'active' : '') + '" data-action="switch-tab" data-tab="members">고객 목록</button>' +
     '<button class="tab-btn ' + (ui.tab === 'sales' ? 'active' : '') + '" data-action="switch-tab" data-tab="sales">매출 관리</button>' +
   '</nav>';
+}
+
+var BACKUP_KEY = 'ns_last_backup';
+function renderBackupHint() {
+  var last = lsGet(BACKUP_KEY, null);
+  var hasData = state.customers.length || state.sales.length || state.reservations.length;
+  if (!hasData) return '';
+  if (!last) return '<div class="backup-hint warn">아직 백업한 적이 없어요. 데이터는 이 폰 브라우저에만 저장돼요.</div>';
+  var days = Math.floor((Date.now() - last) / 86400000);
+  if (days >= 7) return '<div class="backup-hint warn">마지막 백업 ' + days + '일 전 — 백업해두세요.</div>';
+  return '';
+}
+function exportBackup() {
+  var json = JSON.stringify(state);
+  var name = 'nail-backup-' + todayStr() + '.json';
+  var done = function () { lsSet(BACKUP_KEY, Date.now()); renderApp(); };
+  var file = null;
+  try { file = new File([json], name, { type: 'application/json' }); } catch (e) {}
+  if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+    navigator.share({ files: [file], title: name }).then(done).catch(function (e) {
+      if (e && e.name === 'AbortError') return;
+      downloadBackup(json, name, done);
+    });
+  } else {
+    downloadBackup(json, name, done);
+  }
+}
+function downloadBackup(json, name, done) {
+  var url = URL.createObjectURL(new Blob([json], { type: 'application/json' }));
+  var a = document.createElement('a');
+  a.href = url; a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
+  done();
+}
+function importBackup() {
+  var input = document.createElement('input');
+  input.type = 'file'; input.accept = '.json,application/json';
+  input.onchange = function () {
+    var f = input.files && input.files[0];
+    if (!f) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      var data;
+      try { data = JSON.parse(reader.result); } catch (e) { alert('백업 파일을 읽을 수 없어요.'); return; }
+      if (!data || !Array.isArray(data.customers) || !Array.isArray(data.sales)) { alert('올바른 백업 파일이 아니에요.'); return; }
+      if (!confirm('지금 데이터를 백업 파일 내용으로 덮어쓸까요?\n(고객 ' + data.customers.length + '명, 매출 ' + data.sales.length + '건)')) return;
+      state = data;
+      if (!state.reservations) state.reservations = [];
+      if (!state.chargeLogs) state.chargeLogs = [];
+      ui.detailCustomerId = null; ui.calSelectedDate = null; ui.pendingDelete = null;
+      lsSet('ns_detailCustomerId', null); lsSet('ns_calSelectedDate', null);
+      persist();
+      alert('복원했어요.');
+    };
+    reader.readAsText(f);
+  };
+  input.click();
 }
 
 function renderSaleForm() {
@@ -1561,7 +1650,7 @@ function handleChargeSubmit(form) {
   var date = fd.get('date');
   var editId = fd.get('chargeLogId') || null;
 
-  var baseBalance = state.chargeLogs.filter(function (l) { return l.id !== editId; })
+  var baseBalance = state.chargeLogs.filter(function (l) { return l.customerId === customerId && l.id !== editId; })
     .reduce(function (a, l) { return a + (l.type === 'charge' ? Number(l.amount || 0) : -Number(l.amount || 0)); }, 0);
   var projected = baseBalance + (isCharge ? amount : -amount);
   if (!isCharge && projected < 0) {
@@ -1674,14 +1763,19 @@ function handleRescheduleSubmit(form) {
 
 function onAppSubmit(e) {
   e.preventDefault();
-  if (e.target.id === 'sale-form') handleSaleSubmit(e.target);
-  else if (e.target.id === 'customer-form') handleCustomerSubmit(e.target);
-  else if (e.target.id === 'bulk-form') handleBulkSubmit(e.target);
-  else if (e.target.id === 'reservation-form') handleReservationSubmit(e.target);
-  else if (e.target.id === 'charge-form') handleChargeSubmit(e.target);
-  else if (e.target.id === 'day-deduct-form') handleDayDeductSubmit(e.target);
-  else if (e.target.id === 'reschedule-form') handleRescheduleSubmit(e.target);
-  else if (e.target.id === 'customer-reservation-form') handleCustomerReservationSubmit(e.target);
+  try {
+    if (e.target.id === 'sale-form') handleSaleSubmit(e.target);
+    else if (e.target.id === 'customer-form') handleCustomerSubmit(e.target);
+    else if (e.target.id === 'bulk-form') handleBulkSubmit(e.target);
+    else if (e.target.id === 'reservation-form') handleReservationSubmit(e.target);
+    else if (e.target.id === 'charge-form') handleChargeSubmit(e.target);
+    else if (e.target.id === 'day-deduct-form') handleDayDeductSubmit(e.target);
+    else if (e.target.id === 'reschedule-form') handleRescheduleSubmit(e.target);
+    else if (e.target.id === 'customer-reservation-form') handleCustomerReservationSubmit(e.target);
+  } catch (err) {
+    console.error('submit failed', err);
+    alert('저장 중 오류가 발생했습니다: ' + (err && err.message ? err.message : err));
+  }
 }
 
 function onAppClick(e) {
@@ -1699,6 +1793,8 @@ function onAppClick(e) {
     ui.smsPanelReservationId = null;
     renderApp();
   }
+  else if (action === 'export-backup') { exportBackup(); }
+  else if (action === 'import-backup') { importBackup(); }
   else if (action === 'open-sale-form') { ui.saleFormOpen = true; renderApp(); }
   else if (action === 'close-sale-form') { ui.saleFormOpen = false; renderApp(); }
   else if (action === 'open-customer-form') { ui.customerFormOpen = true; ui.editingCustomerId = null; renderApp(); }
@@ -1821,22 +1917,29 @@ function ensureSaveBanner() {
 
 function updateSaveBanner() {
   var el = ensureSaveBanner();
-  if (saveState === 'idle') {
-    el.style.display = 'none';
-    el.textContent = '';
-    return;
-  }
-  el.style.display = 'block';
   if (saveState === 'error') {
+    el.style.display = 'block';
     el.className = 'save-banner save-banner-error';
     el.textContent = '저장 실패 - 재시도 중입니다. 화면을 닫지 마세요';
   } else {
-    el.className = 'save-banner save-banner-saving';
-    el.textContent = '저장 중... 화면을 닫지 마세요';
+    el.style.display = 'none';
+    el.textContent = '';
   }
 }
 
+function saveStandaloneLocal() {
+  try {
+    localStorage.setItem(STANDALONE_KEY, JSON.stringify(state));
+    saveState = 'idle';
+  } catch (e) {
+    console.error('local save failed', e);
+    saveState = 'error';
+  }
+  updateSaveBanner();
+}
+
 function doPublish() {
+  if (STANDALONE) { saveStandaloneLocal(); return; }
   if (!artifactApi) { saveState = 'pending'; updateSaveBanner(); return; }
   saveState = 'saving'; updateSaveBanner();
   try {
@@ -1870,11 +1973,13 @@ function persist() {
 var touchStartX = null;
 var touchStartY = null;
 var touchStartInNav = false;
+var touchStartOnControl = false;
 
 function onAppTouchStart(e) {
   if (ui.detailCustomerId) return;
   if (!e.touches || !e.touches.length) return;
   touchStartInNav = !!(e.target && e.target.closest && e.target.closest('.cal-nav'));
+  touchStartOnControl = !!(e.target && e.target.closest && e.target.closest('button, input, select, textarea, a, label'));
   touchStartX = e.touches[0].clientX;
   touchStartY = e.touches[0].clientY;
 }
@@ -1884,7 +1989,9 @@ function onAppTouchEnd(e) {
   var dx = e.changedTouches[0].clientX - touchStartX;
   var dy = e.changedTouches[0].clientY - touchStartY;
   var wasInNav = touchStartInNav;
-  touchStartX = null; touchStartY = null; touchStartInNav = false;
+  var wasOnControl = touchStartOnControl;
+  touchStartX = null; touchStartY = null; touchStartInNav = false; touchStartOnControl = false;
+  if (wasOnControl) return;
   var absDx = Math.abs(dx), absDy = Math.abs(dy);
 
   if (absDx >= 60 && absDx > absDy * 1.5) {
@@ -1917,11 +2024,20 @@ function onAppKeydown(e) {
 }
 
 function init() {
-  document.getElementById('app').addEventListener('click', onAppClick);
+  window.addEventListener('error', function (e) {
+    try { alert('오류가 발생했습니다: ' + (e && e.message ? e.message : e)); } catch (_e) {}
+  });
+  document.getElementById('app').addEventListener('click', function (e) {
+    try { onAppClick(e); } catch (err) {
+      console.error('click failed', err);
+      alert('처리 중 오류가 발생했습니다: ' + (err && err.message ? err.message : err));
+    }
+  });
   document.getElementById('app').addEventListener('submit', onAppSubmit);
   document.getElementById('app').addEventListener('keydown', onAppKeydown);
   document.getElementById('app').addEventListener('touchstart', onAppTouchStart, { passive: true });
   document.getElementById('app').addEventListener('touchend', onAppTouchEnd, { passive: true });
+  if (STANDALONE && navigator.storage && navigator.storage.persist) { try { navigator.storage.persist(); } catch (e) {} }
   var migrated = migrateCustomerPhones();
   renderApp();
   window.addEventListener('beforeunload', function (e) {
