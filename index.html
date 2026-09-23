@@ -200,7 +200,7 @@
 <body>
 <div id="app"></div>
 <script id="app-data" type="application/json">{"customers":[{"id":"mudx3r1bofwzx","name":"장승아","phone":"01025141266","firstVisit":"2026-09-23","type":"member","createdAt":1790156742815},{"id":"mudx48xh9hbgu","name":"오순이","phone":"01029673560","firstVisit":"2026-09-23","type":"member","createdAt":1790156766005},{"id":"mudx51a9a6yxt","name":"최윤영","phone":"01053909584","firstVisit":"2026-09-23","type":"member","createdAt":1790156802753},{"id":"mudx5h347fjnm","name":"이시헌","phone":"01091554106","firstVisit":"2026-09-23","type":"member","createdAt":1790156823232},{"id":"mudynwlr9xhzl","name":"김세현","phone":"01042423145","firstVisit":"2026-09-23","type":"nonmember","createdAt":1790159362767}],"sales":[{"id":"mudx6dk4a0vxq","date":"2026-09-23","type":"회원","isMembership":true,"customerId":"mudx48xh9hbgu","customerName":"오순이","treatment":"MEMBERSHIP","amount":200000,"payment":"계좌이체","createdAt":1790156865316,"chargeLogId":"mudx6dk49cn7h"},{"id":"mudx7aka8auyb","date":"2026-09-23","type":"회원","isMembership":true,"customerId":"mudx5h347fjnm","customerName":"이시헌","treatment":"MEMBERSHIP","amount":130000,"payment":"계좌이체","createdAt":1790156908090,"chargeLogId":"mudx7akajgpuq"},{"id":"mudx7ni20mwmm","date":"2026-09-23","type":"회원","isMembership":true,"customerId":"mudx3r1bofwzx","customerName":"장승아","treatment":"MEMBERSHIP","amount":120000,"payment":"계좌이체","createdAt":1790156924858,"chargeLogId":"mudx7ni21bf0o"},{"id":"mudx7zkpit3r2","date":"2026-09-23","type":"회원","isMembership":true,"customerId":"mudx51a9a6yxt","customerName":"최윤영","treatment":"MEMBERSHIP","amount":100000,"payment":"계좌이체","createdAt":1790156940505,"chargeLogId":"mudx7zko44f15"}],"reservations":[],"chargeLogs":[{"id":"muc2okims29qu","customerId":"muc27vzpp0lyn","type":"charge","date":"2026-09-22","amount":500000,"memo":"","createdAt":1790045179871},{"id":"muc3l7k391vue","customerId":"muc27vzpp0lyn","type":"deduct","date":"2026-09-22","amount":150000,"memo":"사용","createdAt":1790046702723},{"id":"muc3rieolunwo","customerId":"muc27vzpp0lyn","type":"deduct","date":"2026-09-22","amount":150000,"memo":"젤네일","createdAt":1790046996720},{"id":"muc42pr4jfsvu","customerId":"muc4114i8nkca","type":"charge","date":"2026-09-22","amount":500000,"memo":"","createdAt":1790047519457},{"id":"muc42yx3gzdvc","customerId":"muc40gigyiql4","type":"charge","date":"2026-09-22","amount":500000,"memo":"","createdAt":1790047531335},{"id":"muc4as7ud0zhw","customerId":"muc40gigyiql4","type":"deduct","date":"2026-09-22","amount":150000,"memo":"제거","createdAt":1790047895898},{"id":"mudx6dk49cn7h","customerId":"mudx48xh9hbgu","type":"charge","date":"2026-09-23","amount":200000,"createdAt":1790156865316},{"id":"mudx7akajgpuq","customerId":"mudx5h347fjnm","type":"charge","date":"2026-09-23","amount":130000,"createdAt":1790156908090},{"id":"mudx7ni21bf0o","customerId":"mudx3r1bofwzx","type":"charge","date":"2026-09-23","amount":120000,"createdAt":1790156924858},{"id":"mudx7zko44f15","customerId":"mudx51a9a6yxt","type":"charge","date":"2026-09-23","amount":100000,"createdAt":1790156940505}]}</script>
-<script id="app-build" type="application/json">"bmue2n7l34w7r8"</script>
+<script id="app-build" type="application/json">"bmuer6hrdbvujx"</script>
 <script id="app-script">var HEAD_HTML = `
 
 
@@ -686,6 +686,7 @@ function computeCareItemLabelsFromFormData(fd) {
     labels.push('글리터·자석 x' + qty);
   }
   if (fd.get('care_glitter_all')) labels.push('글리터(전체)');
+  if (fd.get('care_glitter')) labels.push('글리터');
   if (fd.get('care_strong_gel')) labels.push('튼튼이(빌더젤)');
   if (fd.get('care_other_removal')) labels.push('타샵제거');
   if (fd.get('care_wrapping_each')) {
@@ -741,8 +742,7 @@ function renderCareItemOptionsSimple(treatmentStr) {
   var t = treatmentStr || '';
   var hasCare = t.indexOf('기본케어') !== -1;
   var hasOneColor = t.indexOf('기본(원컬러)') !== -1;
-  var hasGlitterEach = /글리터·자석 x\d+/.test(t);
-  var hasGlitterAll = t.indexOf('글리터(전체)') !== -1;
+  var hasGlitter = /글리터·자석 x\d+/.test(t) || t.indexOf('글리터(전체)') !== -1 || t.indexOf('글리터') !== -1;
   var hasStrongGel = t.indexOf('튼튼이(빌더젤)') !== -1;
   var hasOtherRemoval = t.indexOf('타샵제거') !== -1;
   var hasWrappingEach = /랩핑 x\d+/.test(t);
@@ -756,10 +756,7 @@ function renderCareItemOptionsSimple(treatmentStr) {
       '<input type="checkbox" name="care_basic_onecolor" ' + (hasOneColor ? 'checked' : '') + '> 기본(원컬러)' +
     '</label>' +
     '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);">' +
-      '<input type="checkbox" name="care_glitter_each" ' + (hasGlitterEach ? 'checked' : '') + '> 글리터·자석' +
-    '</label>' +
-    '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);">' +
-      '<input type="checkbox" name="care_glitter_all" ' + (hasGlitterAll ? 'checked' : '') + '> 글리터(전체)' +
+      '<input type="checkbox" name="care_glitter" ' + (hasGlitter ? 'checked' : '') + '> 글리터' +
     '</label>' +
     '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);">' +
       '<input type="checkbox" name="care_strong_gel" ' + (hasStrongGel ? 'checked' : '') + '> 튼튼이(빌더젤)' +
