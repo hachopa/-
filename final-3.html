@@ -1,0 +1,2009 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+
+
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>네일샵 회원기록부</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FBF7F4;
+    --surface: #FFFFFF;
+    --surface-alt: #F5EBEC;
+    --border: #E6DADB;
+    --text: #2E2430;
+    --text-muted: #857680;
+    --accent: #B5677B;
+    --accent-dark: #8C4A5C;
+    --gold: #B8923F;
+    --danger: #A6483C;
+    --success: #5F7A5D;
+    --radius: 10px;
+    --shadow: 0 1px 3px rgba(46,36,48,0.08);
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1E1720; --surface: #2A2029; --surface-alt: #332831; --border: #453840;
+      --text: #F3EAEC; --text-muted: #B9A9AF; --accent: #D98CA0; --accent-dark: #F0A8B8;
+      --gold: #D4B15C; --danger: #E29184; --success: #8FB08C;
+      --shadow: 0 1px 3px rgba(0,0,0,0.4);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1E1720; --surface: #2A2029; --surface-alt: #332831; --border: #453840;
+    --text: #F3EAEC; --text-muted: #B9A9AF; --accent: #D98CA0; --accent-dark: #F0A8B8;
+    --gold: #D4B15C; --danger: #E29184; --success: #8FB08C;
+    --shadow: 0 1px 3px rgba(0,0,0,0.4);
+  }
+  *, *::before, *::after { box-sizing: inherit; }
+  html, body { height: 100%; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  body {
+    margin: 0;
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: 'Fraunces', Georgia, serif; margin: 0; }
+  .topbar { padding: 20px 20px 8px; max-width: 900px; margin: 0 auto; }
+  .topbar h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+  .tabs { display: flex; gap: 20px; padding: 8px 20px 0; border-bottom: 1px solid var(--border); max-width: 900px; margin: 0 auto; }
+  .tab-btn {
+    padding: 8px 2px 12px; background: none; border: none; font-size: 15px; font-weight: 600;
+    color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent;
+    font-family: inherit;
+  }
+  .tab-btn.active { color: var(--accent-dark); border-bottom-color: var(--accent); }
+  .tab-content { padding: 16px 20px 60px; max-width: 900px; margin: 0 auto; }
+  .stat-grid { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+  .stat-card {
+    flex: 1 1 160px; background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 14px 16px; box-shadow: var(--shadow);
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .stat-label { font-size: 13px; color: var(--text-muted); }
+  .stat-card strong { font-size: 20px; font-family: 'Fraunces', serif; font-weight: 600; }
+  .stat-clickable { cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; }
+  .stat-clickable:hover { border-color: var(--accent); }
+  .stat-clickable.stat-active { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+  .section-head { display: flex; justify-content: space-between; align-items: center; margin: 22px 0 12px; gap: 12px; flex-wrap: wrap; }
+  .section-head h2 { font-size: 18px; font-weight: 600; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+  .form-card { padding: 16px; margin-bottom: 18px; display: flex; flex-direction: column; gap: 14px; }
+  .form-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .form-row label, .member-field label, .nonmember-field label {
+    flex: 1 1 200px; display: flex; flex-direction: column; gap: 5px;
+    font-size: 13px; color: var(--text-muted);
+  }
+  input, select {
+    padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px;
+    font-size: 15px; background: var(--surface); color: var(--text); font-family: inherit;
+  }
+  input:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .seg-field { flex: 1 1 200px; display: flex; flex-direction: column; gap: 5px; }
+  .seg-field > label:first-child { font-size: 13px; color: var(--text-muted); }
+  .segmented { display: flex; gap: 16px; padding: 10px 0 2px; }
+  .segmented label { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: var(--text); }
+  .form-actions { display: flex; justify-content: flex-end; gap: 8px; }
+  .btn {
+    padding: 10px 16px; border-radius: 8px; border: 1px solid transparent;
+    font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit;
+  }
+  .btn.primary { background: var(--accent); color: #fff; }
+  .btn.primary:hover { background: var(--accent-dark); }
+  .btn.ghost { background: transparent; border-color: var(--border); color: var(--text); }
+  .btn.danger { background: var(--danger); color: #fff; }
+  .btn.danger-outline { background: transparent; border-color: var(--danger); color: var(--danger); }
+  .btn-text { background: none; border: none; color: var(--accent-dark); font-size: 13px; cursor: pointer; padding: 4px 6px; font-family: inherit; }
+  .btn-text.danger { color: var(--danger); }
+  .filters { display: flex; gap: 10px; margin-bottom: 12px; }
+  .filters select { font-size: 13px; padding: 8px 10px; }
+  .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+  th.col-action, td.col-action { position: sticky; right: 0; background: var(--surface); box-shadow: -6px 0 6px -6px rgba(0,0,0,0.15); white-space: nowrap; text-align: right; }
+  thead th.col-action { background: var(--surface-alt); }
+  .segmented-period { display: flex; gap: 6px; flex-wrap: wrap; }
+  .segmented-period .btn { padding: 6px 12px; font-size: 13px; }
+  .suggest-list {
+    position: absolute; top: 100%; left: 0; right: 0; z-index: 20; margin-top: 2px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15); max-height: 220px; overflow-y: auto;
+  }
+  .suggest-item { padding: 9px 12px; font-size: 14px; cursor: pointer; border-bottom: 1px solid var(--border); }
+  .suggest-item:last-child { border-bottom: none; }
+  .suggest-item:hover { background: var(--surface-alt); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  thead th { background: var(--surface-alt); color: var(--text-muted); font-weight: 600; font-size: 13px; }
+  tbody tr:last-child td { border-bottom: none; }
+  tr.clickable { cursor: pointer; }
+  tr.clickable:hover td { background: var(--surface-alt); }
+  .empty-cell { text-align: center; color: var(--text-muted); padding: 28px 12px; white-space: normal; }
+  .badge { padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+  .badge-member { background: rgba(181,103,123,0.15); color: var(--accent-dark); }
+  .badge-guest { background: rgba(184,146,63,0.18); color: var(--gold); }
+  .badge-charge { background: rgba(143,176,140,0.18); color: var(--success); }
+  .overlay { position: fixed; inset: 0; background: rgba(30,20,30,0.5); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 50; }
+  .modal { background: var(--surface); border-radius: 14px; padding: 22px; max-width: 480px; width: 100%; max-height: 85vh; overflow-y: auto; box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+  .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; gap: 12px; }
+  .modal-head h3 { font-size: 19px; font-weight: 600; }
+  .icon-btn { background: none; border: none; color: var(--text-muted); font-size: 14px; cursor: pointer; font-family: inherit; }
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .detail-grid div { font-size: 14px; }
+  .muted { font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 2px; }
+  .modal .table-wrap { margin-bottom: 16px; }
+  .cal-nav { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 14px; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .cal-nav .btn { flex-shrink: 0; white-space: nowrap; }
+  .cal-title { font-size: 22px; font-weight: 600; min-width: 150px; text-align: center; flex-shrink: 0; }
+  .cal-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-bottom: 24px; }
+  .cal-cell {
+    min-height: 130px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface);
+    padding: 8px; display: flex; flex-direction: column; gap: 4px; cursor: pointer; font-size: 13px;
+    align-items: stretch; overflow: hidden;
+  }
+  .cal-cell:hover { background: var(--surface-alt); }
+  .cal-cell.cal-empty { border-color: transparent; background: transparent; cursor: default; }
+  .cal-cell.cal-today { border-color: var(--accent); }
+  .cal-daynum { font-weight: 600; color: var(--text); font-size: 15px; }
+  .cal-dot { background: var(--accent); color: #fff; border-radius: 999px; padding: 1px 6px; font-size: 11px; align-self: flex-start; }
+  .cal-resv-item {
+    font-size: 11px; line-height: 1.4; background: var(--surface-alt); color: var(--text);
+    border-radius: 4px; padding: 2px 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .cal-resv-more { font-size: 11px; color: var(--text-muted); padding: 0 2px; }
+  .cal-body { overflow: hidden; }
+  .cal-anim-next { animation: calSlideFromRight 0.22s ease; }
+  .cal-anim-prev { animation: calSlideFromLeft 0.22s ease; }
+  @keyframes calSlideFromRight { from { transform: translateX(26px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+  @keyframes calSlideFromLeft { from { transform: translateX(-26px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+  .tab-anim-wrap.tab-anim-next { animation: tabSlideFromBottom 0.22s ease; }
+  .tab-anim-wrap.tab-anim-prev { animation: tabSlideFromTop 0.22s ease; }
+  @keyframes tabSlideFromBottom { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  @keyframes tabSlideFromTop { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .tab-content-wide { max-width: 1200px; }
+  @media (max-width: 480px) {
+    .detail-grid { grid-template-columns: 1fr 1fr; }
+    .topbar h1 { font-size: 19px; }
+    .cal-cell { min-height: 92px; font-size: 12px; padding: 5px; gap: 3px; }
+    .cal-resv-item { font-size: 10px; padding: 1px 4px; }
+    .cal-resv-more { font-size: 10px; }
+    .cal-nav { gap: 4px; }
+    .cal-nav .btn { padding: 6px 8px; font-size: 12px; }
+    .cal-title { min-width: 90px; font-size: 15px; }
+    table { font-size: 12.5px; }
+    th, td { padding: 8px 8px; }
+  }
+  .save-banner {
+    position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+    z-index: 9999; padding: 9px 18px; border-radius: 999px; font-size: 13px; font-weight: 500;
+    color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.25); display: none; white-space: nowrap;
+  }
+  .save-banner-saving { background: #444b57; }
+  .save-banner-error { background: #c0392b; }
+</style>
+
+
+
+
+
+</head>
+<body>
+<div id="app"></div>
+<script id="app-data" type="application/json">{"customers": [{"id": "mucfw874g4dok", "name": "하창재", "phone": "01068636676", "firstVisit": "2026-09-22", "memo": "", "type": "member", "createdAt": 1790067372160}, {"id": "mucl8z7kxjjsy", "name": "이경은", "phone": "01043658777", "firstVisit": "2026-09-22", "memo": "제거", "type": "member", "createdAt": 1790076365120}, {"id": "mudaamhrlyits", "name": "송주엽", "phone": "01085826336", "firstVisit": "2026-09-23", "memo": "", "type": "nonmember", "createdAt": 1790118432351}, {"id": "mudaaxaw47fz4", "name": "조미향", "phone": "01085826336", "firstVisit": "2026-09-23", "memo": "", "type": "member", "createdAt": 1790118446360}], "sales": [{"id": "muc6vnutpcvad", "date": "2026-09-22", "type": "회원", "isMembership": true, "customerId": "muc6vd56vrk1p", "customerName": "송주엽", "treatment": "MEMBERSHIP", "amount": 500000, "payment": "계좌이체", "memo": "", "createdAt": 1790052229253, "chargeLogId": "muc6vnusryjfo"}, {"id": "mucahxe2pl02m", "date": "2026-09-22", "type": "회원", "isMembership": true, "customerId": "mucahm4ysv0l6", "customerName": "하창재", "treatment": "MEMBERSHIP", "amount": 500000, "payment": "계좌이체", "memo": "", "createdAt": 1790058306890, "chargeLogId": "mucahxe235iam"}, {"id": "mucfelgi0l692", "date": "2026-09-22", "type": "회원", "isMembership": true, "customerId": "muce6g4kygae5", "customerName": "하창재", "treatment": "MEMBERSHIP", "amount": 500000, "payment": "계좌이체", "memo": "", "createdAt": 1790066549538, "chargeLogId": "mucfelgi2u7x0"}], "reservations": [{"id": "mucldbzg88wwl", "date": "2026-09-22", "time": "12:30", "customerId": "mucl8z7kxjjsy", "customerName": "이경은", "phone": "01043658777", "treatment": "", "memo": "케어", "createdAt": 1790076568300}, {"id": "mud9rbg8e1n33", "date": "2026-09-21", "time": "12:00", "customerId": "mucfw874g4dok", "customerName": "하창재", "phone": "01068636676", "treatment": "기본케어, 기본(원컬러)", "memo": null, "createdAt": 1790117531577}, {"id": "mudb3v3u42idt", "date": "2026-09-26", "time": "12:00", "customerId": "mudaamhrlyits", "customerName": "송주엽", "phone": "01085826336", "treatment": "케어", "memo": "", "createdAt": 1790119796538}], "chargeLogs": [{"id": "muc2okims29qu", "customerId": "muc27vzpp0lyn", "type": "charge", "date": "2026-09-22", "amount": 500000, "memo": "", "createdAt": 1790045179871}, {"id": "muc3l7k391vue", "customerId": "muc27vzpp0lyn", "type": "deduct", "date": "2026-09-22", "amount": 150000, "memo": "사용", "createdAt": 1790046702723}, {"id": "muc3rieolunwo", "customerId": "muc27vzpp0lyn", "type": "deduct", "date": "2026-09-22", "amount": 150000, "memo": "젤네일", "createdAt": 1790046996720}, {"id": "muc42pr4jfsvu", "customerId": "muc4114i8nkca", "type": "charge", "date": "2026-09-22", "amount": 500000, "memo": "", "createdAt": 1790047519457}, {"id": "muc42yx3gzdvc", "customerId": "muc40gigyiql4", "type": "charge", "date": "2026-09-22", "amount": 500000, "memo": "", "createdAt": 1790047531335}, {"id": "muc4as7ud0zhw", "customerId": "muc40gigyiql4", "type": "deduct", "date": "2026-09-22", "amount": 150000, "memo": "제거", "createdAt": 1790047895898}, {"id": "muc6vnusryjfo", "customerId": "muc6vd56vrk1p", "type": "charge", "date": "2026-09-22", "amount": 500000, "memo": "", "createdAt": 1790052229253}, {"id": "mucahxe235iam", "customerId": "mucahm4ysv0l6", "type": "charge", "date": "2026-09-22", "amount": 500000, "memo": "", "createdAt": 1790058306890}, {"id": "mucfelgi2u7x0", "customerId": "muce6g4kygae5", "type": "charge", "date": "2026-09-22", "amount": 500000, "memo": "", "createdAt": 1790066549538}]}</script>
+<script id="app-script">var HEAD_HTML = `
+
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>네일샵 회원기록부</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FBF7F4;
+    --surface: #FFFFFF;
+    --surface-alt: #F5EBEC;
+    --border: #E6DADB;
+    --text: #2E2430;
+    --text-muted: #857680;
+    --accent: #B5677B;
+    --accent-dark: #8C4A5C;
+    --gold: #B8923F;
+    --danger: #A6483C;
+    --success: #5F7A5D;
+    --radius: 10px;
+    --shadow: 0 1px 3px rgba(46,36,48,0.08);
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1E1720; --surface: #2A2029; --surface-alt: #332831; --border: #453840;
+      --text: #F3EAEC; --text-muted: #B9A9AF; --accent: #D98CA0; --accent-dark: #F0A8B8;
+      --gold: #D4B15C; --danger: #E29184; --success: #8FB08C;
+      --shadow: 0 1px 3px rgba(0,0,0,0.4);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1E1720; --surface: #2A2029; --surface-alt: #332831; --border: #453840;
+    --text: #F3EAEC; --text-muted: #B9A9AF; --accent: #D98CA0; --accent-dark: #F0A8B8;
+    --gold: #D4B15C; --danger: #E29184; --success: #8FB08C;
+    --shadow: 0 1px 3px rgba(0,0,0,0.4);
+  }
+  *, *::before, *::after { box-sizing: inherit; }
+  html, body { height: 100%; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  body {
+    margin: 0;
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: 'Fraunces', Georgia, serif; margin: 0; }
+  .topbar { padding: 20px 20px 8px; max-width: 900px; margin: 0 auto; }
+  .topbar h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+  .tabs { display: flex; gap: 20px; padding: 8px 20px 0; border-bottom: 1px solid var(--border); max-width: 900px; margin: 0 auto; }
+  .tab-btn {
+    padding: 8px 2px 12px; background: none; border: none; font-size: 15px; font-weight: 600;
+    color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent;
+    font-family: inherit;
+  }
+  .tab-btn.active { color: var(--accent-dark); border-bottom-color: var(--accent); }
+  .tab-content { padding: 16px 20px 60px; max-width: 900px; margin: 0 auto; }
+  .stat-grid { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+  .stat-card {
+    flex: 1 1 160px; background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 14px 16px; box-shadow: var(--shadow);
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .stat-label { font-size: 13px; color: var(--text-muted); }
+  .stat-card strong { font-size: 20px; font-family: 'Fraunces', serif; font-weight: 600; }
+  .stat-clickable { cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; }
+  .stat-clickable:hover { border-color: var(--accent); }
+  .stat-clickable.stat-active { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+  .section-head { display: flex; justify-content: space-between; align-items: center; margin: 22px 0 12px; gap: 12px; flex-wrap: wrap; }
+  .section-head h2 { font-size: 18px; font-weight: 600; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+  .form-card { padding: 16px; margin-bottom: 18px; display: flex; flex-direction: column; gap: 14px; }
+  .form-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .form-row label, .member-field label, .nonmember-field label {
+    flex: 1 1 200px; display: flex; flex-direction: column; gap: 5px;
+    font-size: 13px; color: var(--text-muted);
+  }
+  input, select {
+    padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px;
+    font-size: 15px; background: var(--surface); color: var(--text); font-family: inherit;
+  }
+  input:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .seg-field { flex: 1 1 200px; display: flex; flex-direction: column; gap: 5px; }
+  .seg-field > label:first-child { font-size: 13px; color: var(--text-muted); }
+  .segmented { display: flex; gap: 16px; padding: 10px 0 2px; }
+  .segmented label { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: var(--text); }
+  .form-actions { display: flex; justify-content: flex-end; gap: 8px; }
+  .btn {
+    padding: 10px 16px; border-radius: 8px; border: 1px solid transparent;
+    font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit;
+  }
+  .btn.primary { background: var(--accent); color: #fff; }
+  .btn.primary:hover { background: var(--accent-dark); }
+  .btn.ghost { background: transparent; border-color: var(--border); color: var(--text); }
+  .btn.danger { background: var(--danger); color: #fff; }
+  .btn.danger-outline { background: transparent; border-color: var(--danger); color: var(--danger); }
+  .btn-text { background: none; border: none; color: var(--accent-dark); font-size: 13px; cursor: pointer; padding: 4px 6px; font-family: inherit; }
+  .btn-text.danger { color: var(--danger); }
+  .filters { display: flex; gap: 10px; margin-bottom: 12px; }
+  .filters select { font-size: 13px; padding: 8px 10px; }
+  .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+  th.col-action, td.col-action { position: sticky; right: 0; background: var(--surface); box-shadow: -6px 0 6px -6px rgba(0,0,0,0.15); white-space: nowrap; text-align: right; }
+  thead th.col-action { background: var(--surface-alt); }
+  .segmented-period { display: flex; gap: 6px; flex-wrap: wrap; }
+  .segmented-period .btn { padding: 6px 12px; font-size: 13px; }
+  .suggest-list {
+    position: absolute; top: 100%; left: 0; right: 0; z-index: 20; margin-top: 2px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15); max-height: 220px; overflow-y: auto;
+  }
+  .suggest-item { padding: 9px 12px; font-size: 14px; cursor: pointer; border-bottom: 1px solid var(--border); }
+  .suggest-item:last-child { border-bottom: none; }
+  .suggest-item:hover { background: var(--surface-alt); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  thead th { background: var(--surface-alt); color: var(--text-muted); font-weight: 600; font-size: 13px; }
+  tbody tr:last-child td { border-bottom: none; }
+  tr.clickable { cursor: pointer; }
+  tr.clickable:hover td { background: var(--surface-alt); }
+  .empty-cell { text-align: center; color: var(--text-muted); padding: 28px 12px; white-space: normal; }
+  .badge { padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+  .badge-member { background: rgba(181,103,123,0.15); color: var(--accent-dark); }
+  .badge-guest { background: rgba(184,146,63,0.18); color: var(--gold); }
+  .badge-charge { background: rgba(143,176,140,0.18); color: var(--success); }
+  .overlay { position: fixed; inset: 0; background: rgba(30,20,30,0.5); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 50; }
+  .modal { background: var(--surface); border-radius: 14px; padding: 22px; max-width: 480px; width: 100%; max-height: 85vh; overflow-y: auto; box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+  .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; gap: 12px; }
+  .modal-head h3 { font-size: 19px; font-weight: 600; }
+  .icon-btn { background: none; border: none; color: var(--text-muted); font-size: 14px; cursor: pointer; font-family: inherit; }
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .detail-grid div { font-size: 14px; }
+  .muted { font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 2px; }
+  .modal .table-wrap { margin-bottom: 16px; }
+  .cal-nav { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 14px; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .cal-nav .btn { flex-shrink: 0; white-space: nowrap; }
+  .cal-title { font-size: 22px; font-weight: 600; min-width: 150px; text-align: center; flex-shrink: 0; }
+  .cal-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-bottom: 24px; }
+  .cal-cell {
+    min-height: 130px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface);
+    padding: 8px; display: flex; flex-direction: column; gap: 4px; cursor: pointer; font-size: 13px;
+    align-items: stretch; overflow: hidden;
+  }
+  .cal-cell:hover { background: var(--surface-alt); }
+  .cal-cell.cal-empty { border-color: transparent; background: transparent; cursor: default; }
+  .cal-cell.cal-today { border-color: var(--accent); }
+  .cal-daynum { font-weight: 600; color: var(--text); font-size: 15px; }
+  .cal-dot { background: var(--accent); color: #fff; border-radius: 999px; padding: 1px 6px; font-size: 11px; align-self: flex-start; }
+  .cal-resv-item {
+    font-size: 11px; line-height: 1.4; background: var(--surface-alt); color: var(--text);
+    border-radius: 4px; padding: 2px 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .cal-resv-more { font-size: 11px; color: var(--text-muted); padding: 0 2px; }
+  .cal-body { overflow: hidden; }
+  .cal-anim-next { animation: calSlideFromRight 0.22s ease; }
+  .cal-anim-prev { animation: calSlideFromLeft 0.22s ease; }
+  @keyframes calSlideFromRight { from { transform: translateX(26px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+  @keyframes calSlideFromLeft { from { transform: translateX(-26px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+  .tab-anim-wrap.tab-anim-next { animation: tabSlideFromBottom 0.22s ease; }
+  .tab-anim-wrap.tab-anim-prev { animation: tabSlideFromTop 0.22s ease; }
+  @keyframes tabSlideFromBottom { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  @keyframes tabSlideFromTop { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .tab-content-wide { max-width: 1200px; }
+  @media (max-width: 480px) {
+    .detail-grid { grid-template-columns: 1fr 1fr; }
+    .topbar h1 { font-size: 19px; }
+    .cal-cell { min-height: 92px; font-size: 12px; padding: 5px; gap: 3px; }
+    .cal-resv-item { font-size: 10px; padding: 1px 4px; }
+    .cal-resv-more { font-size: 10px; }
+    .cal-nav { gap: 4px; }
+    .cal-nav .btn { padding: 6px 8px; font-size: 12px; }
+    .cal-title { min-width: 90px; font-size: 15px; }
+    table { font-size: 12.5px; }
+    th, td { padding: 8px 8px; }
+  }
+  .save-banner {
+    position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+    z-index: 9999; padding: 9px 18px; border-radius: 999px; font-size: 13px; font-weight: 500;
+    color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.25); display: none; white-space: nowrap;
+  }
+  .save-banner-saving { background: #444b57; }
+  .save-banner-error { background: #c0392b; }
+</style>
+
+
+
+
+`;
+
+
+var STANDALONE = !(window.claude && window.claude.use);
+var STANDALONE_KEY = 'ns_full_state_v1';
+
+var state = { customers: [], sales: [] };
+try {
+  var raw = document.getElementById('app-data').textContent;
+  if (raw && raw.trim()) state = JSON.parse(raw);
+} catch (e) {}
+if (STANDALONE) {
+  try {
+    var savedLocal = localStorage.getItem(STANDALONE_KEY);
+    if (savedLocal) state = JSON.parse(savedLocal);
+  } catch (e) {}
+}
+if (!state.customers) state.customers = [];
+if (!state.sales) state.sales = [];
+if (!state.reservations) state.reservations = [];
+if (!state.chargeLogs) state.chargeLogs = [];
+state.customers.forEach(function (c) { if (c.type !== 'member' && c.type !== 'nonmember') c.type = 'member'; });
+state.sales.forEach(function (s) { if (s.type === '충전') { s.type = '회원'; s.isMembership = true; } });
+
+function lsGet(key, fallback) {
+  try {
+    var v = localStorage.getItem(key);
+    return v === null ? fallback : JSON.parse(v);
+  } catch (e) { return fallback; }
+}
+function lsSet(key, value) {
+  try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
+}
+
+var ui = {
+  tab: lsGet('ns_tab', 'sales'),
+  saleFormOpen: false,
+  customerFormOpen: false,
+  bulkFormOpen: false,
+  bulkError: '',
+  editingCustomerId: null,
+  detailCustomerId: lsGet('ns_detailCustomerId', null),
+  filterPeriod: 'month',
+  filterType: 'all',
+  pendingDelete: null,
+  calYear: lsGet('ns_calYear', new Date().getFullYear()),
+  calMonth: lsGet('ns_calMonth', new Date().getMonth()),
+  calSelectedDate: lsGet('ns_calSelectedDate', null),
+  reservationFormOpen: false,
+  editingReservationId: null,
+  statsPeriod: 'month',
+  statsRefDate: todayStr(),
+  statsView: 'total',
+  chargeFormOpen: false,
+  customerReservationFormOpen: false,
+  customerReservationError: '',
+  chargeFormType: 'charge',
+  editingChargeId: null,
+  chargeError: '',
+  dayDeductReservationId: null,
+  dayDeductError: '',
+  editingDayDeductSaleId: null,
+  showDeductsForReservationId: null,
+  rescheduleReservationId: null,
+  smsPanelReservationId: null,
+  customerDeleteMode: false,
+  customerDeleteSelectedIds: []
+};
+
+var artifactApi = null;
+var saveState = 'idle'; // 'idle' | 'pending' | 'saving' | 'error'
+var saveRetryTimer = null;
+var saveBannerEl = null;
+
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+function won(n) { return '₩' + Number(n || 0).toLocaleString('ko-KR'); }
+function escapeHtml(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+function todayStr() {
+  var d = new Date();
+  var local = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
+  return local.toISOString().slice(0, 10);
+}
+function currentMonthKey() { return todayStr().slice(0, 7); }
+function salesInMonth(key) { return state.sales.filter(function (s) { return s.date && s.date.slice(0, 7) === key; }); }
+
+function extractPhone(text) {
+  var str = String(text || '');
+  var m = str.match(/(01[016789][-\s]?\d{3,4}[-\s]?\d{4})/);
+  if (!m) return { name: str.trim(), phone: '' };
+  var phone = m[1].replace(/\s/g, '');
+  var name = (str.slice(0, m.index) + str.slice(m.index + m[0].length)).replace(/[,\s]+/g, ' ').trim();
+  return { name: name, phone: phone };
+}
+
+function migrateCustomerPhones() {
+  var changed = false;
+  state.customers.forEach(function (c) {
+    if (!c.phone) {
+      var ex = extractPhone(c.name);
+      if (ex.phone) { c.name = ex.name; c.phone = ex.phone; changed = true; }
+    }
+  });
+  if (changed) {
+    state.reservations.forEach(function (r) {
+      if (!r.customerId) return;
+      var c = state.customers.find(function (x) { return x.id === r.customerId; });
+      if (c) { r.customerName = c.name; if (!r.phone && c.phone) r.phone = c.phone; }
+    });
+    state.sales.forEach(function (s) {
+      if (!s.customerId) return;
+      var c = state.customers.find(function (x) { return x.id === s.customerId; });
+      if (c) s.customerName = c.name;
+    });
+  }
+  return changed;
+}
+
+function periodLabel(period) {
+  return period === 'day' ? '일별' : period === 'week' ? '주별' : period === 'month' ? '월별' : '연도별';
+}
+function periodRangeLabel(period, refDate) {
+  var ref = refDate || todayStr();
+  if (period === 'day') return ref;
+  if (period === 'week') {
+    var d = new Date(ref + 'T00:00:00');
+    var dow = d.getDay();
+    var diffToMonday = (dow === 0 ? -6 : 1 - dow);
+    var monday = new Date(d.getFullYear(), d.getMonth(), d.getDate() + diffToMonday);
+    var sunday = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + 6);
+    var fmt = function (dt) { return pad2(dt.getMonth() + 1) + '.' + pad2(dt.getDate()); };
+    return fmt(monday) + ' ~ ' + fmt(sunday);
+  }
+  if (period === 'month') return ref.slice(0, 4) + '년 ' + Number(ref.slice(5, 7)) + '월';
+  if (period === 'year') return ref.slice(0, 4) + '년';
+  return '전체';
+}
+function isInPeriod(dateStr, period, refDate) {
+  if (!dateStr) return false;
+  var ref = refDate || todayStr();
+  if (period === 'day') return dateStr === ref;
+  if (period === 'week') {
+    var d = new Date(dateStr + 'T00:00:00');
+    var refD = new Date(ref + 'T00:00:00');
+    var dow = refD.getDay();
+    var diffToMonday = (dow === 0 ? -6 : 1 - dow);
+    var monday = new Date(refD.getFullYear(), refD.getMonth(), refD.getDate() + diffToMonday);
+    var sunday = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + 6, 23, 59, 59, 999);
+    return d >= monday && d <= sunday;
+  }
+  if (period === 'month') return dateStr.slice(0, 7) === ref.slice(0, 7);
+  if (period === 'year') return dateStr.slice(0, 4) === ref.slice(0, 4);
+  return true;
+}
+function salesInPeriod(period, refDate) { return state.sales.filter(function (s) { return isInPeriod(s.date, period, refDate); }); }
+function sumAmount(list) { return list.reduce(function (a, s) { return a + Number(s.amount || 0); }, 0); }
+function sumByPayment(list, method) { return sumAmount(list.filter(function (s) { return (s.payment || '기타') === method; })); }
+
+function customerStats(id) {
+  var list = state.sales.filter(function (s) { return s.customerId === id; });
+  var total = list.reduce(function (a, s) { return a + Number(s.amount || 0); }, 0);
+  var visitList = list.filter(function (s) { return !s.isMembership; });
+  var dates = visitList.map(function (s) { return s.date; }).filter(Boolean).sort();
+  return { visits: visitList.length, total: total, last: dates.length ? dates[dates.length - 1] : null };
+}
+
+function chargeLogsForCustomer(id) {
+  return state.chargeLogs.filter(function (l) { return l.customerId === id; })
+    .sort(function (a, b) { return b.date.localeCompare(a.date) || b.createdAt - a.createdAt; });
+}
+function customerBalance(id) {
+  return state.chargeLogs.filter(function (l) { return l.customerId === id; })
+    .reduce(function (a, l) { return a + (l.type === 'charge' ? Number(l.amount || 0) : -Number(l.amount || 0)); }, 0);
+}
+function reservationIsMember(r) {
+  if (!r.customerId) return false;
+  var c = state.customers.find(function (x) { return x.id === r.customerId; });
+  return !!c && c.type !== 'nonmember';
+}
+
+var NAIL_ITEMS = [
+  { id: 'basic_care', name: '기본케어', member: 20000, nonmember: 30000 },
+  { id: 'basic_onecolor', name: '기본(원컬러)', member: 40000, nonmember: 50000 }
+];
+var GLITTER_UNIT_PRICE = 3000;
+var GLITTER_ALL_PRICE = 20000;
+
+function nailItemUnitPrice(itemId, isMember) {
+  var item = NAIL_ITEMS.filter(function (x) { return x.id === itemId; })[0];
+  if (!item) return 0;
+  return isMember ? item.member : item.nonmember;
+}
+
+function computeNailItemsFromForm(form, isMember) {
+  var labels = [];
+  var total = 0;
+  var care = form.querySelector('input[name="item_basic_care"]');
+  if (care && care.checked) { total += nailItemUnitPrice('basic_care', isMember); labels.push('기본케어'); }
+  var oneColor = form.querySelector('input[name="item_basic_onecolor"]');
+  if (oneColor && oneColor.checked) { total += nailItemUnitPrice('basic_onecolor', isMember); labels.push('기본(원컬러)'); }
+  var glitterEach = form.querySelector('input[name="item_glitter_each"]');
+  var glitterQtyEl = form.querySelector('input[name="glitter_qty"]');
+  if (glitterEach && glitterEach.checked) {
+    var qty = Math.max(1, Number(glitterQtyEl && glitterQtyEl.value) || 1);
+    total += qty * GLITTER_UNIT_PRICE;
+    labels.push('글리터·자석 x' + qty);
+  }
+  var glitterAll = form.querySelector('input[name="item_glitter_all"]');
+  if (glitterAll && glitterAll.checked) { total += GLITTER_ALL_PRICE; labels.push('글리터(전체)'); }
+  return { total: total, labels: labels };
+}
+
+function updateDayDeductAmount(form) {
+  if (!form) return;
+  var customerIdEl = form.querySelector('input[name="customerId"]');
+  var customerId = customerIdEl ? customerIdEl.value : '';
+  var cust = customerId ? state.customers.find(function (x) { return x.id === customerId; }) : null;
+  var isMember = !!cust && cust.type !== 'nonmember';
+  var result = computeNailItemsFromForm(form, isMember);
+  if (!result.labels.length) return;
+  var amountInput = form.querySelector('input[name="amount"]');
+  if (amountInput) amountInput.value = result.total.toLocaleString('en-US');
+}
+
+function formatAmountInput(input) {
+  if (!input) return;
+  var digits = (input.value || '').replace(/[^0-9]/g, '');
+  input.value = digits ? Number(digits).toLocaleString('en-US') : '';
+}
+
+function parseAmountValue(v) {
+  return Number(String(v || '').replace(/,/g, '')) || 0;
+}
+
+function computeNailItemsFromFormData(fd, isMember) {
+  var labels = [];
+  var total = 0;
+  if (fd.get('item_basic_care')) { total += nailItemUnitPrice('basic_care', isMember); labels.push('기본케어'); }
+  if (fd.get('item_basic_onecolor')) { total += nailItemUnitPrice('basic_onecolor', isMember); labels.push('기본(원컬러)'); }
+  if (fd.get('item_glitter_each')) {
+    var qty = Math.max(1, Number(fd.get('glitter_qty')) || 1);
+    total += qty * GLITTER_UNIT_PRICE;
+    labels.push('글리터·자석 x' + qty);
+  }
+  if (fd.get('item_glitter_all')) { total += GLITTER_ALL_PRICE; labels.push('글리터(전체)'); }
+  return { total: total, labels: labels };
+}
+
+function computeCareItemLabelsFromFormData(fd) {
+  var labels = [];
+  if (fd.get('care_basic_care')) labels.push('기본케어');
+  if (fd.get('care_basic_onecolor')) labels.push('기본(원컬러)');
+  if (fd.get('care_glitter_each')) {
+    var qty = Math.max(1, Number(fd.get('care_glitter_qty')) || 1);
+    labels.push('글리터·자석 x' + qty);
+  }
+  if (fd.get('care_glitter_all')) labels.push('글리터(전체)');
+  return labels.join(', ');
+}
+
+function renderCareItemOptions(treatmentStr) {
+  var t = treatmentStr || '';
+  var hasCare = t.indexOf('기본케어') !== -1;
+  var hasOneColor = t.indexOf('기본(원컬러)') !== -1;
+  var glitterMatch = t.match(/글리터·자석 x(\d+)/);
+  var hasGlitterEach = !!glitterMatch;
+  var glitterQty = glitterMatch ? glitterMatch[1] : '1';
+  var hasGlitterAll = t.indexOf('글리터(전체)') !== -1;
+  return '' +
+  '<div style="width:100%;display:flex;flex-direction:column;gap:6px;">' +
+    '<span style="font-size:13px;color:var(--text-muted);">케어 항목</span>' +
+    '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);">' +
+      '<input type="checkbox" name="care_basic_care" ' + (hasCare ? 'checked' : '') + '> 기본케어' +
+    '</label>' +
+    '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);">' +
+      '<input type="checkbox" name="care_basic_onecolor" ' + (hasOneColor ? 'checked' : '') + '> 기본(원컬러)' +
+    '</label>' +
+    '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);flex-wrap:wrap;">' +
+      '<input type="checkbox" name="care_glitter_each" ' + (hasGlitterEach ? 'checked' : '') + '> 글리터·자석 수량 ' +
+      '<input type="number" name="care_glitter_qty" min="1" step="1" value="' + glitterQty + '" style="width:60px;padding:4px 6px;">' +
+    '</label>' +
+    '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);">' +
+      '<input type="checkbox" name="care_glitter_all" ' + (hasGlitterAll ? 'checked' : '') + '> 글리터(전체)' +
+    '</label>' +
+  '</div>';
+}
+
+function renderNailItemOptions(isMember) {
+  var careLabel = '기본케어 (' + won(nailItemUnitPrice('basic_care', isMember)) + ')';
+  var oneColorLabel = '기본(원컬러) (' + won(nailItemUnitPrice('basic_onecolor', isMember)) + ')';
+  return '' +
+  '<div style="width:100%;display:flex;flex-direction:column;gap:6px;">' +
+    '<span style="font-size:12px;color:var(--text-muted);">네일 항목</span>' +
+    '<label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text);">' +
+      '<input type="checkbox" name="item_basic_care" onchange="updateDayDeductAmount(this.form)"> ' + careLabel +
+    '</label>' +
+    '<label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text);">' +
+      '<input type="checkbox" name="item_basic_onecolor" onchange="updateDayDeductAmount(this.form)"> ' + oneColorLabel +
+    '</label>' +
+    '<label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text);flex-wrap:wrap;">' +
+      '<input type="checkbox" name="item_glitter_each" onchange="updateDayDeductAmount(this.form)"> 글리터·자석(개당 ' + won(GLITTER_UNIT_PRICE) + ') 수량 ' +
+      '<input type="number" name="glitter_qty" min="1" step="1" value="1" style="width:60px;padding:4px 6px;" oninput="updateDayDeductAmount(this.form)">' +
+    '</label>' +
+    '<label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text);">' +
+      '<input type="checkbox" name="item_glitter_all" onchange="updateDayDeductAmount(this.form)"> 글리터(전체) (' + won(GLITTER_ALL_PRICE) + ')' +
+    '</label>' +
+  '</div>';
+}
+
+function toggleSaleType(radio) {
+  var form = radio.closest('form');
+  var isMember = radio.value === 'member' && radio.checked;
+  form.querySelector('.member-field').style.display = isMember ? 'block' : 'none';
+  form.querySelector('.nonmember-field').style.display = isMember ? 'none' : 'block';
+}
+function setFilterPeriod(v) { ui.filterPeriod = v; renderApp(); }
+function setFilterType(v) { ui.filterType = v; renderApp(); }
+function setStatsRefDate(v) { if (v) { ui.statsRefDate = v; renderApp(); } }
+function setStatsRefMonth(v) { if (v) { ui.statsRefDate = v + '-01'; renderApp(); } }
+function setStatsRefYear(v) { if (v && Number(v) > 0) { ui.statsRefDate = v + '-01-01'; renderApp(); } }
+function renderStatsRefControl() {
+  var period = ui.statsPeriod;
+  var input = '';
+  if (period === 'day' || period === 'week') {
+    input = '<input type="date" value="' + ui.statsRefDate + '" onchange="setStatsRefDate(this.value)">';
+  } else if (period === 'month') {
+    input = '<input type="month" value="' + ui.statsRefDate.slice(0, 7) + '" onchange="setStatsRefMonth(this.value)">';
+  } else if (period === 'year') {
+    input = '<input type="number" value="' + ui.statsRefDate.slice(0, 4) + '" min="2000" max="2100" style="max-width:100px;" onchange="setStatsRefYear(this.value)">';
+  }
+  return '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">' + input +
+    '<button class="btn ghost" data-action="stats-ref-today">오늘</button></div>';
+}
+
+function renderHeader() {
+  return '' +
+  '<header class="topbar"><h1>네일샵 회원기록부</h1></header>' +
+  '<nav class="tabs">' +
+    '<button class="tab-btn ' + (ui.tab === 'calendar' || ui.tab === 'today' ? 'active' : '') + '" data-action="switch-tab" data-tab="calendar">예약 캘린더</button>' +
+    '<button class="tab-btn ' + (ui.tab === 'members' ? 'active' : '') + '" data-action="switch-tab" data-tab="members">고객 목록</button>' +
+    '<button class="tab-btn ' + (ui.tab === 'sales' ? 'active' : '') + '" data-action="switch-tab" data-tab="sales">매출 관리</button>' +
+  '</nav>';
+}
+
+function renderSaleForm() {
+  if (!ui.saleFormOpen) return '';
+  var memberList = state.customers.filter(function (c) { return c.type !== 'nonmember'; });
+  var hasMembers = memberList.length > 0;
+  var memberOptions = memberList.slice().sort(function(a,b){return a.name.localeCompare(b.name,'ko');})
+    .map(function (c) { return '<option value="' + c.id + '">' + escapeHtml(c.name) + '</option>'; }).join('');
+  return '' +
+  '<form id="sale-form" class="card form-card">' +
+    '<div class="form-row">' +
+      '<label>날짜<input type="date" name="date" value="' + todayStr() + '" required></label>' +
+      '<div class="seg-field"><label>구분</label><div class="segmented">' +
+        '<label><input type="radio" name="type" value="member" ' + (hasMembers ? 'checked' : 'disabled') + ' onchange="toggleSaleType(this)"> 회원</label>' +
+        '<label><input type="radio" name="type" value="nonmember" ' + (hasMembers ? '' : 'checked') + ' onchange="toggleSaleType(this)"> 비회원</label>' +
+      '</div></div>' +
+    '</div>' +
+    '<div class="member-field" style="display:' + (hasMembers ? 'block' : 'none') + '">' +
+      '<label>고객 선택<select name="customerId">' + memberOptions + '</select></label>' +
+    '</div>' +
+    '<div class="nonmember-field" style="display:' + (hasMembers ? 'none' : 'block') + '">' +
+      '<label>고객명 (선택)<input type="text" name="customerNameFree" placeholder="예: 워크인 손님"></label>' +
+    '</div>' +
+    '<div class="form-row">' +
+      '<label>시술 내용<input type="text" name="treatment" placeholder="예: 젤네일 + 케어" required></label>' +
+      '<label>금액<input type="text" inputmode="numeric" name="amount" placeholder="0" oninput="formatAmountInput(this)" required></label>' +
+    '</div>' +
+    '<div class="form-row">' +
+      '<label>결제 수단<select name="payment"><option value="카드">카드</option><option value="현금">현금</option><option value="계좌이체">계좌이체</option><option value="기타">기타</option></select></label>' +
+    '</div>' +
+    '<div class="form-actions">' +
+      '<button type="button" class="btn ghost" data-action="close-sale-form">취소</button>' +
+      '<button type="submit" class="btn primary">매출 저장</button>' +
+    '</div>' +
+  '</form>';
+}
+
+function renderSalesTab() {
+  var periodSales = salesInPeriod(ui.statsPeriod, ui.statsRefDate);
+  var revenueSales = periodSales.filter(function (s) { return !s.isMembership; });
+  var totalAll = sumAmount(revenueSales);
+  var totalMember = sumAmount(revenueSales.filter(function (s) { return s.type === '회원'; }));
+  var totalNon = sumAmount(revenueSales.filter(function (s) { return s.type === '비회원'; }));
+  var totalMembership = sumAmount(periodSales.filter(function (s) { return s.isMembership; }));
+  var rangeLabel = periodRangeLabel(ui.statsPeriod, ui.statsRefDate);
+
+  var list = state.sales.slice().sort(function (a, b) { return b.date.localeCompare(a.date) || b.createdAt - a.createdAt; });
+  if (ui.filterType === 'all') list = list.filter(function (s) { return !s.isMembership; });
+  if (ui.filterType === 'member') list = list.filter(function (s) { return s.type === '회원' && !s.isMembership; });
+  if (ui.filterType === 'nonmember') list = list.filter(function (s) { return s.type === '비회원' && !s.isMembership; });
+  if (ui.filterType === 'membership') list = list.filter(function (s) { return s.isMembership; });
+  if (ui.filterPeriod !== 'all') list = list.filter(function (s) { return isInPeriod(s.date, ui.filterPeriod, ui.statsRefDate); });
+
+  var rows = list.map(function (s) {
+    var confirming = ui.pendingDelete && ui.pendingDelete.type === 'sale' && ui.pendingDelete.id === s.id;
+    var badgeClass = s.type === '회원' ? 'badge-member' : 'badge-guest';
+    var typeLabel = s.type;
+    return '<tr>' +
+      '<td>' + s.date + '</td>' +
+      '<td><span class="badge ' + badgeClass + '">' + typeLabel + '</span></td>' +
+      '<td>' + escapeHtml(s.customerName || '-') + '</td>' +
+      '<td>' + escapeHtml(s.treatment) + '</td>' +
+      '<td>' + won(s.amount) + '</td>' +
+      '<td>' + (s.payment || '-') + '</td>' +
+      '<td class="col-action">' + (confirming ?
+        '<button class="btn-text danger" data-action="confirm-delete-sale" data-id="' + s.id + '">삭제</button><button class="btn-text" data-action="cancel-delete">취소</button>' :
+        '<button class="btn-text" data-action="delete-sale" data-id="' + s.id + '">삭제</button>') + '</td>' +
+    '</tr>';
+  }).join('') || '<tr><td colspan="7" class="empty-cell">등록된 매출이 없어요. 위에서 새 매출을 추가해보세요.</td></tr>';
+
+  return '' +
+  '<section class="tab-content">' +
+    '<div class="section-head" style="margin-top:0;"><h2>매출 통계</h2>' +
+      '<div class="segmented-period">' +
+        ['day', 'week', 'month', 'year'].map(function (p) {
+          return '<button class="btn ' + (ui.statsPeriod === p ? 'primary' : 'ghost') + '" data-action="set-stats-period" data-period="' + p + '">' + periodLabel(p) + '</button>';
+        }).join('') +
+      '</div>' +
+    '</div>' +
+    '<div style="margin-bottom:10px;">' + renderStatsRefControl() + '</div>' +
+    '<div class="segmented-period" style="margin-bottom:10px;">' +
+      '<button class="btn ' + (ui.statsView === 'total' ? 'primary' : 'ghost') + '" data-action="set-stats-view" data-view="total">' + rangeLabel + ' 총매출</button>' +
+      '<button class="btn ' + (ui.statsView === 'membership' ? 'primary' : 'ghost') + '" data-action="set-stats-view" data-view="membership">MEMBERSHIP 매출</button>' +
+    '</div>' +
+    (ui.statsView === 'membership' ?
+    '<div class="stat-grid">' +
+      '<div class="stat-card stat-clickable ' + (ui.filterType === 'membership' ? 'stat-active' : '') + '" data-action="set-history-filter" data-filter="membership"><span class="stat-label">' + rangeLabel + ' MEMBERSHIP 매출</span><strong style="color:var(--gold);">' + won(totalMembership) + '</strong></div>' +
+    '</div>' :
+    '<div class="stat-grid">' +
+      '<div class="stat-card stat-clickable ' + (ui.filterType === 'all' ? 'stat-active' : '') + '" style="flex:1 1 100%;" data-action="set-history-filter" data-filter="all"><span class="stat-label">' + rangeLabel + ' 총매출</span><strong>' + won(totalAll) + '</strong></div>' +
+    '</div>' +
+    '<div class="stat-grid">' +
+      '<div class="stat-card stat-clickable ' + (ui.filterType === 'member' ? 'stat-active' : '') + '" data-action="set-history-filter" data-filter="member"><span class="stat-label">회원 매출</span><strong>' + won(totalMember) + '</strong></div>' +
+      '<div class="stat-card stat-clickable ' + (ui.filterType === 'nonmember' ? 'stat-active' : '') + '" data-action="set-history-filter" data-filter="nonmember"><span class="stat-label">비회원 매출</span><strong>' + won(totalNon) + '</strong></div>' +
+    '</div>') +
+    '<div class="section-head"><h2>매출 내역</h2>' +
+      '<div class="segmented-period">' +
+        ['day', 'week', 'month', 'year', 'all'].map(function (p) {
+          return '<button class="btn ' + (ui.filterPeriod === p ? 'primary' : 'ghost') + '" data-action="set-history-period" data-period="' + p + '">' + (p === 'all' ? '전체' : periodLabel(p)) + '</button>';
+        }).join('') +
+      '</div>' +
+    '</div>' +
+    '<div class="filters">' +
+      '<select onchange="setFilterType(this.value)">' +
+        '<option value="all" ' + (ui.filterType === 'all' ? 'selected' : '') + '>전체</option>' +
+        '<option value="member" ' + (ui.filterType === 'member' ? 'selected' : '') + '>회원</option>' +
+        '<option value="nonmember" ' + (ui.filterType === 'nonmember' ? 'selected' : '') + '>비회원</option>' +
+        '<option value="membership" ' + (ui.filterType === 'membership' ? 'selected' : '') + '>MEMBERSHIP</option>' +
+      '</select>' +
+    '</div>' +
+    '<div class="table-wrap"><table><thead><tr><th>날짜</th><th>구분</th><th>고객명</th><th>시술 내용</th><th>금액</th><th>결제</th><th class="col-action"></th></tr></thead>' +
+    '<tbody>' + rows + '</tbody></table></div>' +
+  '</section>';
+}
+
+function renderCustomerForm() {
+  if (!ui.customerFormOpen) return '';
+  var editing = ui.editingCustomerId ? state.customers.find(function (c) { return c.id === ui.editingCustomerId; }) : null;
+  var custType = editing ? (editing.type === 'nonmember' ? 'nonmember' : 'member') : 'member';
+  return '' +
+  '<form id="customer-form" class="card form-card">' +
+    '<div class="seg-field"><label>구분</label><div class="segmented">' +
+      '<label><input type="radio" name="customerType" value="member" ' + (custType === 'member' ? 'checked' : '') + '> 회원</label>' +
+      '<label><input type="radio" name="customerType" value="nonmember" ' + (custType === 'nonmember' ? 'checked' : '') + '> 비회원</label>' +
+    '</div></div>' +
+    '<div class="form-row">' +
+      '<label>이름<input type="text" name="name" required value="' + (editing ? escapeHtml(editing.name) : '') + '"></label>' +
+      '<label>연락처<input type="tel" name="phone" placeholder="010-0000-0000" value="' + (editing ? escapeHtml(editing.phone || '') : '') + '"></label>' +
+    '</div>' +
+    '<div class="form-actions">' +
+      '<button type="button" class="btn ghost" data-action="close-customer-form">취소</button>' +
+      '<button type="submit" class="btn primary">' + (editing ? '수정 저장' : '고객 저장') + '</button>' +
+    '</div>' +
+  '</form>';
+}
+
+function renderBulkForm() {
+  if (!ui.bulkFormOpen) return '';
+  return '' +
+  '<form id="bulk-form" class="card form-card">' +
+    '<div style="font-size:13px;color:var(--text-muted);line-height:1.6;">' +
+      '한 줄에 고객 한 명씩 입력하세요. 형식: <strong>이름, 연락처, 첫 방문일</strong><br>' +
+      '연락처·첫 방문일은 생략 가능합니다. (예: 김민지, 010-1234-5678) 일괄 등록은 모두 회원으로 등록됩니다.' +
+    '</div>' +
+    '<textarea name="bulkText" rows="8" placeholder="김민지, 010-1234-5678, 2024-01-10&#10;이수아, 010-2222-3333&#10;박서연" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:14px;background:var(--surface);color:var(--text);font-family:inherit;resize:vertical;"></textarea>' +
+    (ui.bulkError ? '<div style="font-size:13px;color:var(--danger);">' + escapeHtml(ui.bulkError) + '</div>' : '') +
+    '<div class="form-actions">' +
+      '<button type="button" class="btn ghost" data-action="close-bulk-form">취소</button>' +
+      '<button type="submit" class="btn primary">일괄 등록</button>' +
+    '</div>' +
+  '</form>';
+}
+
+function renderCustomerRows(list, isNonmemberTable, deleteMode, selectedIds) {
+  return list.map(function (c) {
+    var stats = customerStats(c.id);
+    var balance = customerBalance(c.id);
+    var searchKey = ((c.name || '') + ' ' + (c.phone || '')).toLowerCase();
+    var extraCell = isNonmemberTable ?
+      '<td style="text-align:right;">' + won(stats.total) + '</td>' :
+      '<td style="text-align:right;' + (balance > 0 ? 'color:var(--success);font-weight:600;' : '') + '">' + won(balance) + '</td>';
+    var checked = !!(selectedIds && selectedIds.indexOf(c.id) !== -1);
+    var checkboxCell = deleteMode ? '<td style="width:36px;text-align:center;"><input type="checkbox" ' + (checked ? 'checked' : '') + ' style="width:18px;height:18px;cursor:pointer;pointer-events:none;"></td>' : '';
+    var rowAction = deleteMode ? 'toggle-customer-delete-select' : 'view-customer';
+    return '<tr class="clickable customer-row" data-search="' + escapeHtml(searchKey) + '" data-action="' + rowAction + '" data-id="' + c.id + '">' +
+      checkboxCell +
+      '<td style="font-weight:600;">' + escapeHtml(c.name) + '</td>' +
+      '<td>' + (c.phone ? escapeHtml(c.phone) : '-') + '</td>' +
+      '<td style="text-align:center;">' + stats.visits + '회</td>' +
+      extraCell +
+      '<td>' + (stats.last || '-') + '</td>' +
+    '</tr>';
+  }).join('');
+}
+
+function filterCustomerList(input) {
+  var query = input.value.trim().toLowerCase();
+  var rows = document.querySelectorAll('.customer-row');
+  rows.forEach(function (row) {
+    var key = row.getAttribute('data-search') || '';
+    row.style.display = (!query || key.indexOf(query) !== -1) ? '' : 'none';
+  });
+}
+
+function renderMembersTab() {
+  var all = state.customers.slice().sort(function (a, b) { return a.name.localeCompare(b.name, 'ko'); });
+  var members = all.filter(function (c) { return c.type !== 'nonmember'; });
+  var nonmembers = all.filter(function (c) { return c.type === 'nonmember'; });
+  var deleteMode = ui.customerDeleteMode;
+  var selectedIds = ui.customerDeleteSelectedIds || [];
+  var memberRows = renderCustomerRows(members, false, deleteMode, selectedIds) || '<tr><td colspan="' + (deleteMode ? 6 : 5) + '" class="empty-cell">등록된 회원이 없어요.</td></tr>';
+  var nonmemberRows = renderCustomerRows(nonmembers, true, deleteMode, selectedIds) || '<tr><td colspan="' + (deleteMode ? 6 : 5) + '" class="empty-cell">등록된 비회원이 없어요.</td></tr>';
+  var checkboxHead = deleteMode ? '<th></th>' : '';
+  var memberTableHead = '<thead><tr>' + checkboxHead + '<th>이름</th><th>연락처</th><th style="text-align:center;">방문</th><th style="text-align:right;">잔액</th><th>최근 방문</th></tr></thead>';
+  var nonmemberTableHead = '<thead><tr>' + checkboxHead + '<th>이름</th><th>연락처</th><th style="text-align:center;">방문</th><th style="text-align:right;">결제액</th><th>최근 방문</th></tr></thead>';
+  var confirmingBulk = ui.pendingDelete && ui.pendingDelete.type === 'bulk-customers';
+  var selectedCount = selectedIds.length;
+
+  var deleteControls = '' +
+    '<button class="btn ' + (deleteMode ? 'ghost' : 'danger-outline') + '" data-action="toggle-customer-delete-mode">' + (deleteMode ? '취소' : '삭제') + '</button>' +
+    (deleteMode && selectedCount > 0 ? (confirmingBulk ?
+      '<button class="btn-text" data-action="cancel-delete">취소</button><button class="btn danger" data-action="confirm-bulk-delete-customers">정말 삭제(' + selectedCount + '명)</button>' :
+      '<button class="btn danger" data-action="bulk-delete-customers">선택 삭제(' + selectedCount + '명)</button>') : '');
+
+  return '' +
+  '<section class="tab-content">' +
+    '<div class="section-head"><h2>고객 목록</h2>' +
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
+        deleteControls +
+        (deleteMode ? '' : '<button class="btn primary" data-action="' + (ui.customerFormOpen ? 'close-customer-form' : 'open-customer-form') + '">' + (ui.customerFormOpen ? '닫기' : '+ 고객 추가') + '</button>') +
+      '</div>' +
+    '</div>' +
+    (deleteMode ? '' : renderCustomerForm()) +
+    '<div class="form-row" style="margin-bottom:4px;">' +
+      '<label style="flex:1 1 240px;">고객 검색<input type="text" placeholder="이름 또는 연락처로 검색" oninput="filterCustomerList(this)"></label>' +
+    '</div>' +
+    '<div class="section-head" style="margin:18px 0 10px;"><h2 style="font-size:15px;">회원 <span class="muted" style="display:inline;">(' + members.length + '명)</span></h2></div>' +
+    '<div class="table-wrap"><table>' + memberTableHead + '<tbody>' + memberRows + '</tbody></table></div>' +
+    '<div class="section-head" style="margin:18px 0 10px;"><h2 style="font-size:15px;">비회원 <span class="muted" style="display:inline;">(' + nonmembers.length + '명)</span></h2></div>' +
+    '<div class="table-wrap"><table>' + nonmemberTableHead + '<tbody>' + nonmemberRows + '</tbody></table></div>' +
+  '</section>';
+}
+
+function renderChargeForm(customerId) {
+  if (!ui.chargeFormOpen) return '';
+  var isCharge = ui.chargeFormType === 'charge';
+  var editing = ui.editingChargeId ? state.chargeLogs.find(function (l) { return l.id === ui.editingChargeId; }) : null;
+  return '' +
+  '<form id="charge-form" class="card form-card" style="margin-bottom:14px;">' +
+    '<input type="hidden" name="customerId" value="' + customerId + '">' +
+    '<input type="hidden" name="chargeLogId" value="' + (editing ? editing.id : '') + '">' +
+    '<div class="seg-field"><label>구분</label><div class="segmented">' +
+      '<label><input type="radio" name="chargeType" value="charge" ' + (isCharge ? 'checked' : '') + ' onchange="setChargeFormType(this.value)"> MEMBERSHIP</label>' +
+      '<label><input type="radio" name="chargeType" value="deduct" ' + (!isCharge ? 'checked' : '') + ' onchange="setChargeFormType(this.value)"> 사용(차감)</label>' +
+    '</div></div>' +
+    '<div class="form-row">' +
+      '<label>날짜<input type="date" name="date" value="' + (editing ? editing.date : todayStr()) + '" required></label>' +
+      '<label>금액<input type="text" inputmode="numeric" name="amount" placeholder="0" oninput="formatAmountInput(this)" value="' + (editing ? Number(editing.amount).toLocaleString('en-US') : '') + '" required></label>' +
+    '</div>' +
+    (isCharge ? '<label>결제 수단<select name="payment"><option value="카드">카드</option><option value="현금">현금</option><option value="계좌이체">계좌이체</option><option value="기타">기타</option></select></label>' : '') +
+    (ui.chargeError ? '<div style="font-size:13px;color:var(--danger);">' + escapeHtml(ui.chargeError) + '</div>' : '') +
+    '<div class="form-actions">' +
+      '<button type="button" class="btn ghost" data-action="close-charge-form">취소</button>' +
+      '<button type="submit" class="btn primary">' + (editing ? '수정 저장' : (isCharge ? 'MEMBERSHIP 저장' : '차감 저장')) + '</button>' +
+    '</div>' +
+  '</form>';
+}
+
+function setChargeFormType(v) { ui.chargeFormType = v; renderApp(); }
+
+function renderCustomerDetailModal(id) {
+  var c = state.customers.find(function (x) { return x.id === id; });
+  if (!c) return '';
+  var stats = customerStats(id);
+  var balance = customerBalance(id);
+  var visits = state.sales.filter(function (s) { return s.customerId === id; }).sort(function (a, b) { return b.date.localeCompare(a.date); });
+  var rows = visits.map(function (s) {
+    return '<tr><td>' + s.date + '</td><td>' + escapeHtml(s.treatment) + '</td><td>' + won(s.amount) + '</td></tr>';
+  }).join('') || '<tr><td colspan="3" class="empty-cell">방문 기록이 없어요.</td></tr>';
+  var lastVisitSale = visits.filter(function (s) { return !s.isMembership; })[0] || null;
+  var todayKeyForModal = todayStr();
+  var upcomingReservations = state.reservations.filter(function (r) { return r.customerId === id && r.date >= todayKeyForModal; })
+    .sort(function (a, b) { return a.date.localeCompare(b.date) || (a.time || '').localeCompare(b.time || ''); });
+  var upcomingReservationRows = upcomingReservations.map(function (r) {
+    var nameCell = escapeHtml(c.name);
+    return '<tr><td>' + r.date + '</td><td>' + (r.time || '-') + '</td><td>' + nameCell + '</td><td>' + escapeHtml(r.treatment || '-') + '</td></tr>';
+  }).join('') || '<tr><td colspan="4" class="empty-cell">예정된 예약이 없어요.</td></tr>';
+  var confirming = ui.pendingDelete && ui.pendingDelete.type === 'customer' && ui.pendingDelete.id === c.id;
+  var chargeConfirming = ui.pendingDelete && ui.pendingDelete.type === 'charge';
+  var chargeRows = chargeLogsForCustomer(id).map(function (l) {
+    var isConfirmingCharge = chargeConfirming && ui.pendingDelete.id === l.id;
+    var chargeActionBtns = isConfirmingCharge ?
+      '<button class="btn-text danger" data-action="confirm-delete-charge" data-id="' + l.id + '">정말 삭제</button><button class="btn-text" data-action="cancel-delete">취소</button>' :
+      ('<button class="btn-text" data-action="edit-charge" data-id="' + l.id + '">수정</button><button class="btn-text danger" data-action="delete-charge" data-id="' + l.id + '">삭제</button>');
+    return '<tr>' +
+      '<td>' + l.date + '</td>' +
+      '<td><span class="badge ' + (l.type === 'charge' ? 'badge-member' : 'badge-guest') + '">' + (l.type === 'charge' ? 'MEMBERSHIP' : '차감') + '</span></td>' +
+      '<td>' + (l.type === 'charge' ? '+' : '-') + won(l.amount) + '</td>' +
+      '<td class="col-action">' + chargeActionBtns + '</td>' +
+    '</tr>';
+  }).join('') || '<tr><td colspan="4" class="empty-cell">MEMBERSHIP/차감 내역이 없어요.</td></tr>';
+  var isNonmember = c.type === 'nonmember';
+
+  return '' +
+  '<div class="overlay" data-action="close-detail">' +
+    '<div class="modal" data-action="stop-propagation">' +
+      '<div class="modal-head"><h3>' + escapeHtml(c.name) + '</h3><button class="icon-btn" data-action="close-detail">닫기</button></div>' +
+      '<div class="detail-grid">' +
+        '<div><span class="muted">연락처</span>' + (c.phone ? escapeHtml(c.phone) : '—') + '</div>' +
+        '<div><span class="muted">최근 방문일</span>' + (stats.last || '—') + '</div>' +
+        '<div><span class="muted">총 방문</span>' + stats.visits + '회</div>' +
+        '<div><span class="muted">최근 케어 내역</span>' + (lastVisitSale && lastVisitSale.treatment ? escapeHtml(lastVisitSale.treatment) : '—') + '</div>' +
+      '</div>' +
+      (ui.customerReservationFormOpen ? '' :
+      '<div class="section-head" style="margin:0 0 10px;"><h2 style="font-size:15px;">예정된 예약</h2></div>' +
+      '<div class="table-wrap" style="margin-bottom:16px;"><table><thead><tr><th>날짜</th><th>시간</th><th>고객명</th><th>시술 내용</th></tr></thead><tbody>' + upcomingReservationRows + '</tbody></table></div>') +
+      (ui.customerReservationFormOpen ? '' :
+      (isNonmember ? '' :
+      '<div class="stat-card" style="margin-bottom:14px;">' +
+        '<span class="stat-label">MEMBERSHIP 잔액</span><strong style="' + (balance > 0 ? 'color:var(--success);' : '') + '">' + won(balance) + '</strong>' +
+      '</div>' +
+      '<div class="section-head" style="margin:0 0 10px;"><h2 style="font-size:15px;">MEMBERSHIP / 사용 내역</h2>' +
+        (!ui.chargeFormOpen ? '<div style="display:flex;gap:6px;">' +
+          '<button class="btn ghost" data-action="open-charge-form" data-type="charge" data-id="' + c.id + '">+ MEMBERSHIP</button>' +
+          '<button class="btn ghost" data-action="open-charge-form" data-type="deduct" data-id="' + c.id + '">- 사용</button>' +
+        '</div>' : '') +
+      '</div>' +
+      renderChargeForm(c.id) +
+      '<div class="table-wrap" style="margin-bottom:16px;"><table><thead><tr><th>날짜</th><th>구분</th><th>금액</th><th class="col-action"></th></tr></thead><tbody>' + chargeRows + '</tbody></table></div>') +
+      '<div class="table-wrap"><table><thead><tr><th>날짜</th><th>시술 내용</th><th>금액</th></tr></thead><tbody>' + rows + '</tbody></table></div>') +
+      renderCustomerReservationForm(c) +
+      (ui.customerReservationFormOpen ? '' :
+      '<div class="form-actions">' +
+        (confirming ?
+          '<button class="btn-text" data-action="cancel-delete">취소</button><button class="btn danger" data-action="confirm-delete-customer" data-id="' + c.id + '">정말 삭제</button>' :
+          '<button class="btn danger-outline" data-action="delete-customer" data-id="' + c.id + '">회원 삭제</button>') +
+        '<button class="btn primary" data-action="edit-customer" data-id="' + c.id + '">정보 수정</button>' +
+        '<button class="btn ghost" data-action="open-customer-reservation-form" data-id="' + c.id + '">예약</button>' +
+      '</div>') +
+    '</div>' +
+  '</div>';
+}
+
+function renderCustomerReservationForm(c) {
+  if (!ui.customerReservationFormOpen) return '';
+  return '' +
+  '<form id="customer-reservation-form" class="card form-card" style="margin-bottom:14px;">' +
+    '<input type="hidden" name="customerId" value="' + c.id + '">' +
+    '<div class="form-row">' +
+      '<label>날짜<input type="date" name="date" value="' + todayStr() + '" required></label>' +
+      '<label>시간 (30분 단위)<select name="time">' + timeSlotOptions('') + '</select></label>' +
+    '</div>' +
+    '<label>시술 내용<input type="text" name="treatment" placeholder="예: 젤네일 + 케어"></label>' +
+    (ui.customerReservationError ? '<div style="font-size:13px;color:var(--danger);">' + escapeHtml(ui.customerReservationError) + '</div>' : '') +
+    '<div class="form-actions">' +
+      '<button type="button" class="btn ghost" data-action="close-customer-reservation-form">취소</button>' +
+      '<button type="submit" class="btn primary">예약 등록</button>' +
+    '</div>' +
+  '</form>';
+}
+
+var MONTH_NAMES = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+var WEEKDAY_NAMES = ['일','월','화','수','목','금','토'];
+
+function pad2(n) { return (n < 10 ? '0' : '') + n; }
+function dateKey(y, m, d) { return y + '-' + pad2(m + 1) + '-' + pad2(d); }
+function reservationsOnDate(dateStr) {
+  return state.reservations.filter(function (r) { return r.date === dateStr; })
+    .sort(function (a, b) { return (a.time || '').localeCompare(b.time || ''); });
+}
+
+var calAnimDir = null; // 'next' | 'prev' | null
+
+function renderCalendarTab() {
+  var y = ui.calYear, m = ui.calMonth;
+  var firstDow = new Date(y, m, 1).getDay();
+  var daysInMonth = new Date(y, m + 1, 0).getDate();
+  var todayKey = todayStr();
+
+  var cells = '';
+  var maxShowPerDay = 6;
+  for (var i = 0; i < firstDow; i++) cells += '<div class="cal-cell cal-empty"></div>';
+  for (var d = 1; d <= daysInMonth; d++) {
+    var key = dateKey(y, m, d);
+    var dayResv = reservationsOnDate(key);
+    var isToday = key === todayKey;
+    var itemsHtml = dayResv.slice(0, maxShowPerDay).map(function (r) {
+      return '<div class="cal-resv-item">' + (r.time || '-') + ' ' + escapeHtml(r.customerName || '-') + '</div>';
+    }).join('');
+    var moreHtml = dayResv.length > maxShowPerDay ? '<div class="cal-resv-more">+' + (dayResv.length - maxShowPerDay) + '건 더</div>' : '';
+    cells += '<div class="cal-cell ' + (isToday ? 'cal-today' : '') + '" data-action="select-day" data-date="' + key + '">' +
+      '<span class="cal-daynum">' + d + '</span>' +
+      itemsHtml + moreHtml +
+    '</div>';
+  }
+
+  var html = '' +
+  '<section class="tab-content tab-content-wide">' +
+    '<div class="cal-nav">' +
+      '<button class="btn ghost" data-action="cal-prev-year">&laquo; ' + (y - 1) + '</button>' +
+      '<button class="btn ghost" data-action="cal-prev-month">&lsaquo;</button>' +
+      '<h2 class="cal-title">' + y + '년 ' + MONTH_NAMES[m] + '</h2>' +
+      '<button class="btn ghost" data-action="cal-next-month">&rsaquo;</button>' +
+      '<button class="btn ghost" data-action="cal-next-year">' + (y + 1) + ' &raquo;</button>' +
+    '</div>' +
+    '<div class="cal-body' + (calAnimDir === 'next' ? ' cal-anim-next' : calAnimDir === 'prev' ? ' cal-anim-prev' : '') + '">' +
+      '<div class="cal-weekdays">' + WEEKDAY_NAMES.map(function (w) { return '<div>' + w + '</div>'; }).join('') + '</div>' +
+      '<div class="cal-grid">' + cells + '</div>' +
+    '</div>' +
+  '</section>';
+  calAnimDir = null;
+  return html;
+}
+
+function timeSlotOptions(selected) {
+  var opts = ['<option value="">시간 선택</option>'];
+  for (var h = 9; h <= 20; h++) {
+    var maxMin = h === 20 ? 0 : 59;
+    for (var mm = 0; mm <= maxMin; mm += 30) {
+      var val = pad2(h) + ':' + pad2(mm);
+      opts.push('<option value="' + val + '" ' + (selected === val ? 'selected' : '') + '>' + val + '</option>');
+    }
+  }
+  return opts.join('');
+}
+
+function renderReservationForm(dateStr) {
+  if (!ui.reservationFormOpen) return '';
+  var editing = ui.editingReservationId ? state.reservations.find(function (r) { return r.id === ui.editingReservationId; }) : null;
+  var initialName = editing ? escapeHtml(editing.customerName || '') : '';
+  var initialId = editing && editing.customerId ? editing.customerId : '';
+  return '' +
+  '<form id="reservation-form" class="card form-card">' +
+    '<div class="form-row">' +
+      '<label>날짜<input type="date" name="date" value="' + (editing ? editing.date : dateStr) + '" required></label>' +
+      '<label>시간 (30분 단위)<select name="time">' + timeSlotOptions(editing ? (editing.time || '') : '') + '</select></label>' +
+    '</div>' +
+    '<div class="form-row">' +
+      '<div style="flex:1 1 200px;position:relative;">' +
+        '<label style="font-size:13px;color:var(--text-muted);display:flex;flex-direction:column;gap:5px;">고객명 (이름 입력 시 회원 목록에서 자동 검색)' +
+          '<input type="text" name="customerName" autocomplete="off" placeholder="" value="' + initialName + '" oninput="filterCustomerSuggestions(this)" onfocus="filterCustomerSuggestions(this)" onblur="setTimeout(function(){var c=document.getElementById(\'reservation-suggest-list\'); if(c) c.style.display=\'none\';},150)">' +
+        '</label>' +
+        '<div id="reservation-suggest-list" class="suggest-list" style="display:none;"></div>' +
+      '</div>' +
+      '<label>연락처<input type="tel" name="phone" placeholder="" value="' + (editing ? escapeHtml(editing.phone || '') : '') + '"></label>' +
+    '</div>' +
+    '<div class="form-row">' +
+      renderCareItemOptions(editing ? editing.treatment : '') +
+    '</div>' +
+    '<input type="hidden" name="customerId" value="' + initialId + '">' +
+    '<input type="hidden" name="reservationId" value="' + (editing ? editing.id : '') + '">' +
+    '<div class="form-actions">' +
+      '<button type="button" class="btn ghost" data-action="close-reservation-form">취소</button>' +
+      '<button type="submit" class="btn primary">' + (editing ? '예약 수정' : '예약 등록') + '</button>' +
+    '</div>' +
+  '</form>';
+}
+
+
+function filterCustomerSuggestions(input) {
+  var query = input.value.trim();
+  var container = document.getElementById('reservation-suggest-list');
+  var form = input.form;
+  var hidden = form ? form.querySelector('input[name="customerId"]') : null;
+  if (hidden) hidden.value = '';
+  if (!container) return;
+  if (!query) { container.innerHTML = ''; container.style.display = 'none'; return; }
+  var matches = state.customers.filter(function (c) { return c.name.indexOf(query) !== -1; }).slice(0, 6);
+  if (!matches.length) { container.innerHTML = ''; container.style.display = 'none'; return; }
+  container.innerHTML = matches.map(function (c) {
+    var isNonmember = c.type === 'nonmember';
+    return '<div class="suggest-item" onmousedown="selectCustomerSuggestion(\'' + c.id + '\')">' +
+      '<span class="badge ' + (isNonmember ? 'badge-guest' : 'badge-member') + '" style="margin-right:6px;">' + (isNonmember ? '비회원' : '회원') + '</span>' + escapeHtml(c.name) +
+      (c.phone ? ' <span class="muted" style="display:inline;">' + escapeHtml(c.phone) + '</span>' : '') +
+    '</div>';
+  }).join('');
+  container.style.display = 'block';
+}
+
+function selectCustomerSuggestion(id) {
+  var c = state.customers.find(function (x) { return x.id === id; });
+  if (!c) return;
+  var form = document.getElementById('reservation-form');
+  if (!form) return;
+  var nameInput = form.querySelector('input[name="customerName"]');
+  var hidden = form.querySelector('input[name="customerId"]');
+  var phoneInput = form.querySelector('input[name="phone"]');
+  if (nameInput) nameInput.value = c.name;
+  if (hidden) hidden.value = c.id;
+  if (phoneInput && c.phone) phoneInput.value = c.phone;
+  var container = document.getElementById('reservation-suggest-list');
+  if (container) { container.innerHTML = ''; container.style.display = 'none'; }
+}
+
+function deductSalesForReservation(reservationId) {
+  return state.sales.filter(function (s) { return s.reservationId === reservationId; });
+}
+
+function renderDayDeductForm(r) {
+  var isMember = reservationIsMember(r);
+  var editSale = ui.editingDayDeductSaleId ? state.sales.find(function (s) { return s.id === ui.editingDayDeductSaleId; }) : null;
+  var payments = ['카드', '현금', '계좌이체', '기타'];
+  var paymentOptions = payments.map(function (p) {
+    return '<option value="' + p + '" ' + (editSale && editSale.payment === p ? 'selected' : '') + '>' + p + '</option>';
+  }).join('');
+  var nonmemberCashHtml = '';
+  if (!isMember) {
+    nonmemberCashHtml = '<label style="font-size:12px;color:var(--text-muted);display:flex;flex-direction:column;gap:4px;flex:1 1 120px;"><span style="color:var(--success);font-weight:600;">현금 할인 (-5000원)</span><input type="checkbox" name="applyCashDiscount" style="width:auto;cursor:pointer;"> 적용</label>';
+  }
+  return '' +
+    '<form id="day-deduct-form" style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;background:var(--surface-alt);padding:10px;border-radius:8px;margin-top:10px;">' +
+        '<input type="hidden" name="customerId" value="' + (r.customerId || '') + '">' +
+        '<input type="hidden" name="saleId" value="' + (editSale ? editSale.id : '') + '">' +
+        '<label style="font-size:12px;color:var(--text-muted);display:flex;flex-direction:column;gap:4px;flex:1 1 120px;">금액<input type="text" inputmode="numeric" name="amount" placeholder="0" oninput="formatAmountInput(this)" value="' + (editSale ? Number(editSale.amount).toLocaleString('en-US') : '') + '" required></label>' +
+        '<label style="font-size:12px;color:var(--text-muted);display:flex;flex-direction:column;gap:4px;flex:1 1 120px;">결제 수단<select name="payment">' + paymentOptions + '</select></label>' +
+        nonmemberCashHtml +
+        renderNailItemOptions(isMember) +
+        '<button type="button" class="btn ghost" data-action="close-day-deduct">취소</button>' +
+        '<button type="submit" class="btn primary">' + (editSale ? '수정 저장' : (isMember ? '차감 저장' : '결제 저장')) + '</button>' +
+        (ui.dayDeductError ? '<div style="width:100%;font-size:13px;color:var(--danger);">' + escapeHtml(ui.dayDeductError) + '</div>' : '') +
+      '</form>';
+}
+
+function renderDayModal(dateStr) {
+  var list = reservationsOnDate(dateStr);
+  var confirming = ui.pendingDelete && ui.pendingDelete.type === 'reservation';
+  var cards = list.map(function (r) {
+    return renderTodayCard(r, confirming && ui.pendingDelete.id === r.id);
+  }).join('') || '<div class="card empty-cell">이 날짜에 예약이 없어요.</div>';
+
+  return '' +
+  '<div class="overlay" data-action="close-day-modal">' +
+    '<div class="modal" data-action="stop-propagation">' +
+      '<div class="modal-head"><h3>' + todayDateLabel(dateStr) + '</h3><button class="icon-btn" data-action="close-day-modal">닫기</button></div>' +
+      renderReservationForm(dateStr) +
+      (!ui.reservationFormOpen ? '<div class="form-actions" style="justify-content:flex-start;margin-bottom:14px;"><button class="btn primary" data-action="open-reservation-form">+ 예약 추가</button></div>' : '') +
+      cards +
+    '</div>' +
+  '</div>';
+}
+
+function renderRescheduleForm(r) {
+  return '' +
+  '<form id="reschedule-form" style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;background:var(--surface-alt);padding:10px;border-radius:8px;margin-top:10px;">' +
+    '<input type="hidden" name="reservationId" value="' + r.id + '">' +
+    '<label style="font-size:12px;color:var(--text-muted);display:flex;flex-direction:column;gap:4px;flex:1 1 140px;">변경할 날짜<input type="date" name="date" value="' + r.date + '" required></label>' +
+    '<label style="font-size:12px;color:var(--text-muted);display:flex;flex-direction:column;gap:4px;flex:1 1 140px;">변경할 시간<select name="time">' + timeSlotOptions(r.time || '') + '</select></label>' +
+    '<button type="button" class="btn ghost" data-action="close-reschedule">취소</button>' +
+    '<button type="submit" class="btn primary">변경 저장</button>' +
+  '</form>';
+}
+
+function buildReservationSmsText(r) {
+  var name = r.customerName || '고객';
+  var timePart = r.time ? r.time + ' ' : '';
+  var treatmentPart = r.treatment ? ' (' + r.treatment + ')' : '';
+  return name + '님, 안녕하세요 :) 오늘 ' + timePart + '예약 확인차 문자드립니다' + treatmentPart + '. 시간 맞춰 방문 부탁드려요. 감사합니다!';
+}
+
+function reservationSmsHref(r) {
+  var msg = buildReservationSmsText(r);
+  var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent || '');
+  var sep = isIOS ? '&' : '?';
+  return 'sms:' + r.phone + sep + 'body=' + encodeURIComponent(msg);
+}
+
+function copySmsText(id) {
+  var r = state.reservations.find(function (x) { return x.id === id; });
+  if (!r) return;
+  var msg = buildReservationSmsText(r);
+  var done = function (ok) {
+    var el = document.getElementById('sms-copy-status-' + id);
+    if (el) el.textContent = ok ? '복사했어요! 문자 앱에 붙여넣기 하세요.' : '복사에 실패했어요. 아래 문구를 길게 눌러 직접 복사해주세요.';
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(msg).then(function () { done(true); }).catch(function () {
+      copySmsTextFallback(id, msg, done);
+    });
+  } else {
+    copySmsTextFallback(id, msg, done);
+  }
+}
+
+function copySmsTextFallback(id, msg, done) {
+  try {
+    var ta = document.getElementById('sms-text-' + id);
+    if (ta) {
+      ta.focus();
+      ta.select();
+      var ok = document.execCommand('copy');
+      done(!!ok);
+      return;
+    }
+  } catch (e) {}
+  done(false);
+}
+
+function copyText(text, done) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function () { done(true); }).catch(function () {
+      copyTextFallback(text, done);
+    });
+  } else {
+    copyTextFallback(text, done);
+  }
+}
+
+function copyTextFallback(text, done) {
+  try {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.top = '-9999px';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    var ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+    done(!!ok);
+  } catch (e) {
+    done(false);
+  }
+}
+
+function copySmsPhone(id) {
+  var r = state.reservations.find(function (x) { return x.id === id; });
+  if (!r || !r.phone) return;
+  copyText(r.phone, function (ok) {
+    var el = document.getElementById('sms-copy-status-' + id);
+    if (el) el.textContent = ok ? '번호를 복사했어요. 문자 앱 받는사람 칸에 붙여넣으세요.' : '번호 복사에 실패했어요.';
+  });
+}
+
+function renderSmsPanel(r) {
+  var msg = buildReservationSmsText(r);
+  return '' +
+  '<div style="background:var(--surface-alt);border-radius:8px;padding:10px;margin-top:8px;display:flex;flex-direction:column;gap:8px;">' +
+    '<div style="font-size:12px;color:var(--text-muted);">번호와 문구를 각각 복사해서 문자 앱에 붙여넣으세요.</div>' +
+    '<textarea id="sms-text-' + r.id + '" readonly style="width:100%;min-height:70px;padding:8px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;background:var(--surface);color:var(--text);resize:vertical;" onclick="this.select();">' + escapeHtml(msg) + '</textarea>' +
+    '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">' +
+      '<button type="button" class="btn ghost" data-action="copy-sms-text" data-id="' + r.id + '">문구 복사</button>' +
+      (r.phone ? '<button type="button" class="btn ghost" data-action="copy-sms-phone" data-id="' + r.id + '">번호 복사(' + r.phone + ')</button>' : '') +
+      '<button type="button" class="btn-text" data-action="toggle-sms-panel" data-id="' + r.id + '">닫기</button>' +
+    '</div>' +
+    '<div id="sms-copy-status-' + r.id + '" style="font-size:12px;color:var(--success);"></div>' +
+  '</div>';
+}
+
+function renderTodayCard(r, isConfirming) {
+  var isMember = reservationIsMember(r);
+  var balanceHtml = '';
+  if (isMember) {
+    var bal = customerBalance(r.customerId);
+    balanceHtml = '<div style="text-align:right;">' +
+      '<div style="font-size:12px;color:var(--text-muted);margin-bottom:2px;">잔액</div>' +
+      '<div style="font-size:14px;font-weight:600;"><span style="' + (bal > 0 ? 'color:var(--success);' : bal < 0 ? 'color:var(--danger);' : '') + '">' + won(bal) + '</span></div>' +
+    '</div>';
+  }
+  var existingDeducts = deductSalesForReservation(r.id);
+  var deductsShown = ui.showDeductsForReservationId === r.id;
+  var actionBtns = isConfirming ?
+    '<button class="btn-text danger" data-action="confirm-delete-reservation" data-id="' + r.id + '">정말 삭제</button><button class="btn-text" data-action="cancel-delete">취소</button>' :
+    ('<button class="btn-text" data-action="open-day-deduct" data-id="' + r.id + '">' + (isMember ? '금액 차감' : '결제 금액 입력') + '</button>' +
+     (existingDeducts.length ? '<button class="btn-text" data-action="toggle-day-deducts" data-id="' + r.id + '">' + (isMember ? '차감 수정·삭제' : '결제 수정·삭제') + '</button>' : '') +
+     (r.phone ? '<button class="btn-text" data-action="toggle-sms-panel" data-id="' + r.id + '">문자 보내기</button>' : '') +
+     '<button class="btn-text" data-action="open-reschedule" data-id="' + r.id + '">날짜/시간 변경</button>' +
+     '<button class="btn-text danger" data-action="delete-reservation" data-id="' + r.id + '">삭제</button>');
+  var nameWithMemoHtml = escapeHtml(r.customerName || '-');
+  var nameHtml = isMember ?
+    '<span style="cursor:pointer;text-decoration:underline;text-underline-offset:3px;" data-action="open-day-deduct" data-id="' + r.id + '">' + nameWithMemoHtml + '</span> <span class="badge badge-member">회원</span>' :
+    '<span style="cursor:pointer;text-decoration:underline;text-underline-offset:3px;" data-action="open-day-deduct" data-id="' + r.id + '">' + nameWithMemoHtml + '</span> <span class="badge badge-guest">비회원</span>';
+
+  var paymentSummaryHtml = '';
+  if (existingDeducts.length) {
+    var totalPayment = existingDeducts.reduce(function (a, ds) { return a + Number(ds.amount || 0); }, 0);
+    paymentSummaryHtml = '<div style="display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:700;color:#fff;background:var(--accent);padding:5px 12px;border-radius:999px;">' +
+      '<span style="font-size:11px;font-weight:600;opacity:0.85;">' + (isMember ? '차감' : '결제') + '</span>' + won(totalPayment) +
+    '</div>';
+  }
+
+  var deductsHtml = '';
+  if (deductsShown) {
+    deductsHtml = existingDeducts.map(function (ds) {
+      if (ui.editingDayDeductSaleId === ds.id) return '';
+      var confirmingUndo = ui.pendingDelete && ui.pendingDelete.type === 'daydeduct' && ui.pendingDelete.id === ds.id;
+      return '<div style="background:var(--surface-alt);border-radius:8px;padding:8px 10px;margin-top:8px;font-size:12px;color:var(--text-muted);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">' +
+        '<span>' + (isMember ? '차감 내역' : '결제 내역') + ': ' + won(ds.amount) + (ds.memo ? ' · ' + escapeHtml(ds.memo) : '') + '</span>' +
+        '<span>' + (confirmingUndo ?
+          '<button class="btn-text danger" data-action="confirm-delete-day-deduct" data-id="' + ds.id + '">되돌리기 확정</button><button class="btn-text" data-action="cancel-delete">취소</button>' :
+          '<button class="btn-text" data-action="edit-day-deduct" data-id="' + ds.id + '">수정</button><button class="btn-text danger" data-action="delete-day-deduct" data-id="' + ds.id + '">되돌리기</button>') + '</span>' +
+      '</div>';
+    }).join('');
+  }
+  var treatmentHtml = r.treatment ?
+    '<div style="font-size:13px;color:var(--text);padding:8px 10px;background:rgba(181,103,123,0.06);border-left:2px solid var(--accent);border-radius:4px;">' + escapeHtml(r.treatment) + '</div>' :
+    '';
+
+  return '' +
+  '<div class="card" style="padding:16px;margin-bottom:10px;border:1.5px solid var(--border);display:flex;flex-direction:column;gap:10px;">' +
+    '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">' +
+      '<div style="display:flex;flex-direction:column;gap:6px;">' +
+        '<div style="font-size:16px;font-weight:700;color:var(--text);">' + (r.time || '-') + '</div>' +
+        '<div style="font-size:14px;font-weight:600;">' + nameHtml + '</div>' +
+      '</div>' +
+      balanceHtml +
+    '</div>' +
+    (treatmentHtml || paymentSummaryHtml ? '<div style="display:flex;flex-direction:column;gap:8px;">' + treatmentHtml + paymentSummaryHtml + '</div>' : '') +
+    '<div style="display:flex;gap:4px;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--border);">' + actionBtns + '</div>' +
+    deductsHtml +
+    (ui.dayDeductReservationId === r.id ? renderDayDeductForm(r) : '') +
+    (ui.rescheduleReservationId === r.id ? renderRescheduleForm(r) : '') +
+    (ui.smsPanelReservationId === r.id ? renderSmsPanel(r) : '') +
+  '</div>';
+}
+
+function shiftDateStr(dateStr, delta) {
+  var d = new Date(dateStr + 'T00:00:00');
+  d.setDate(d.getDate() + delta);
+  return dateKey(d.getFullYear(), d.getMonth(), d.getDate());
+}
+
+function todayDateLabel(dateStr) {
+  var todayKey = todayStr();
+  var diffDays = Math.round((new Date(dateStr + 'T00:00:00') - new Date(todayKey + 'T00:00:00')) / 86400000);
+  var suffix = diffDays === 0 ? ' (오늘)' : diffDays === 1 ? ' (내일)' : diffDays === -1 ? ' (어제)' : '';
+  var d = new Date(dateStr + 'T00:00:00');
+  return dateStr + ' ' + WEEKDAY_NAMES[d.getDay()] + '요일' + suffix;
+}
+
+var TAB_ORDER = ['calendar', 'members', 'sales'];
+var tabAnimDir = null; // 'next' | 'prev' | null
+
+function renderApp() {
+  var app = document.getElementById('app');
+  var body = ui.tab === 'sales' ? renderSalesTab() : ui.tab === 'members' ? renderMembersTab() : renderCalendarTab();
+  var tabAnimClass = tabAnimDir === 'next' ? ' tab-anim-next' : tabAnimDir === 'prev' ? ' tab-anim-prev' : '';
+  app.innerHTML = renderHeader() + '<div class="tab-anim-wrap' + tabAnimClass + '">' + body + '</div>' +
+    (ui.detailCustomerId ? renderCustomerDetailModal(ui.detailCustomerId) : '') +
+    (ui.calSelectedDate ? renderDayModal(ui.calSelectedDate) : '');
+  tabAnimDir = null;
+}
+
+function switchTabBySwipe(dir) {
+  var idx = TAB_ORDER.indexOf(ui.tab === 'today' ? 'calendar' : ui.tab);
+  if (idx === -1) idx = 0;
+  var newIdx = idx + dir;
+  if (newIdx < 0 || newIdx >= TAB_ORDER.length) return;
+  tabAnimDir = dir > 0 ? 'next' : 'prev';
+  ui.tab = TAB_ORDER[newIdx];
+  lsSet('ns_tab', ui.tab);
+  ui.dayDeductReservationId = null; ui.editingDayDeductSaleId = null; ui.dayDeductError = '';
+  ui.showDeductsForReservationId = null; ui.rescheduleReservationId = null; ui.pendingDelete = null;
+  ui.smsPanelReservationId = null;
+  renderApp();
+}
+
+function handleSaleSubmit(form) {
+  var fd = new FormData(form);
+  var type = fd.get('type') === 'member' ? '회원' : '비회원';
+  var customerId = null, customerName = '';
+  if (type === '회원') {
+    customerId = fd.get('customerId');
+    var c = state.customers.find(function (x) { return x.id === customerId; });
+    customerName = c ? c.name : '';
+  } else {
+    customerName = fd.get('customerNameFree') || '비회원';
+  }
+  state.sales.push({
+    id: uid(), date: fd.get('date'), type: type, customerId: customerId, customerName: customerName,
+    treatment: fd.get('treatment'), amount: parseAmountValue(fd.get('amount')),
+    payment: fd.get('payment'), createdAt: Date.now()
+  });
+  ui.saleFormOpen = false;
+  persist();
+}
+
+function handleCustomerSubmit(form) {
+  var fd = new FormData(form);
+  var ex = extractPhone(fd.get('name'));
+  var name = ex.name || fd.get('name');
+  var phone = fd.get('phone') || ex.phone || '';
+  var type = fd.get('customerType') === 'nonmember' ? 'nonmember' : 'member';
+  if (ui.editingCustomerId) {
+    var c = state.customers.find(function (x) { return x.id === ui.editingCustomerId; });
+    if (c) {
+      c.name = name; c.phone = phone; c.type = type;
+    }
+  } else {
+    state.customers.push({ id: uid(), name: name, phone: phone, firstVisit: todayStr(), type: type, createdAt: Date.now() });
+  }
+  ui.customerFormOpen = false;
+  ui.editingCustomerId = null;
+  persist();
+}
+
+function handleBulkSubmit(form) {
+  var fd = new FormData(form);
+  var text = (fd.get('bulkText') || '').toString();
+  var lines = text.split('\n').map(function (l) { return l.trim(); }).filter(function (l) { return l.length > 0; });
+  if (!lines.length) { ui.bulkError = '등록할 회원 정보를 입력해주세요.'; renderApp(); return; }
+  var added = 0;
+  lines.forEach(function (line) {
+    var parts = line.split(',').map(function (p) { return p.trim(); });
+    var rawName = parts[0];
+    if (!rawName) return;
+    var ex = extractPhone(rawName);
+    var name = ex.name || rawName;
+    var phone = parts[1] || ex.phone || '';
+    state.customers.push({
+      id: uid(), name: name, phone: phone, firstVisit: parts[2] || '', type: 'member', createdAt: Date.now()
+    });
+    added++;
+  });
+  ui.bulkFormOpen = false;
+  ui.bulkError = '';
+  persist();
+}
+
+function handleReservationSubmit(form) {
+  var fd = new FormData(form);
+  var customerId = fd.get('customerId') || null;
+  var customerName = fd.get('customerName') || '';
+  var phone = fd.get('phone') || '';
+  if (customerId) {
+    var c = state.customers.find(function (x) { return x.id === customerId; });
+    if (c) { customerName = c.name; phone = c.phone || phone; }
+  }
+  var id = fd.get('reservationId');
+  if (id) {
+    var r = state.reservations.find(function (x) { return x.id === id; });
+    if (r) {
+      r.date = fd.get('date'); r.time = fd.get('time'); r.customerId = customerId; r.customerName = customerName;
+      r.phone = phone; r.treatment = computeCareItemLabelsFromFormData(fd);
+    }
+  } else {
+    state.reservations.push({
+      id: uid(), date: fd.get('date'), time: fd.get('time'), customerId: customerId, customerName: customerName,
+      phone: phone, treatment: computeCareItemLabelsFromFormData(fd), createdAt: Date.now()
+    });
+  }
+  ui.reservationFormOpen = false;
+  ui.editingReservationId = null;
+  persist();
+}
+
+function handleCustomerReservationSubmit(form) {
+  var fd = new FormData(form);
+  var customerId = fd.get('customerId');
+  var c = state.customers.find(function (x) { return x.id === customerId; });
+  if (!c) return;
+  state.reservations.push({
+    id: uid(), date: fd.get('date'), time: fd.get('time'), customerId: c.id, customerName: c.name,
+    phone: c.phone || '', treatment: fd.get('treatment'), createdAt: Date.now()
+  });
+  ui.customerReservationFormOpen = false;
+  ui.customerReservationError = '';
+  persist();
+}
+
+function handleChargeSubmit(form) {
+  var fd = new FormData(form);
+  var customerId = fd.get('customerId');
+  if (!customerId) return;
+  var isCharge = fd.get('chargeType') !== 'deduct';
+  var amount = parseAmountValue(fd.get('amount'));
+  var date = fd.get('date');
+  var editId = fd.get('chargeLogId') || null;
+
+  var baseBalance = state.chargeLogs.filter(function (l) { return l.id !== editId; })
+    .reduce(function (a, l) { return a + (l.type === 'charge' ? Number(l.amount || 0) : -Number(l.amount || 0)); }, 0);
+  var projected = baseBalance + (isCharge ? amount : -amount);
+  if (!isCharge && projected < 0) {
+    ui.chargeError = '잘못 입력했어요. 차감 금액이 보유 잔액(' + won(baseBalance) + ')보다 많아요.';
+    renderApp();
+    return;
+  }
+
+  if (editId) {
+    var log = state.chargeLogs.find(function (l) { return l.id === editId; });
+    if (log) { log.type = isCharge ? 'charge' : 'deduct'; log.date = date; log.amount = amount; }
+    var linkedSale = state.sales.find(function (s) { return s.chargeLogId === editId; });
+    if (isCharge) {
+      var editedCustomer = state.customers.find(function (x) { return x.id === customerId; });
+      if (linkedSale) {
+        linkedSale.date = date; linkedSale.amount = amount;
+        linkedSale.payment = fd.get('payment') || linkedSale.payment || '기타';
+        linkedSale.type = '회원'; linkedSale.isMembership = true; linkedSale.treatment = 'MEMBERSHIP';
+      } else {
+        state.sales.push({
+          id: uid(), date: date, type: '회원', isMembership: true, customerId: customerId, customerName: editedCustomer ? editedCustomer.name : '',
+          treatment: 'MEMBERSHIP', amount: amount, payment: fd.get('payment') || '기타', createdAt: Date.now(), chargeLogId: editId
+        });
+      }
+    } else if (linkedSale) {
+      state.sales = state.sales.filter(function (s) { return s.id !== linkedSale.id; });
+    }
+  } else {
+    var chargeLogId = uid();
+    state.chargeLogs.push({
+      id: chargeLogId, customerId: customerId, type: isCharge ? 'charge' : 'deduct',
+      date: date, amount: amount, createdAt: Date.now()
+    });
+    if (isCharge) {
+      var c = state.customers.find(function (x) { return x.id === customerId; });
+      state.sales.push({
+        id: uid(), date: date, type: '회원', isMembership: true, customerId: customerId, customerName: c ? c.name : '',
+        treatment: 'MEMBERSHIP', amount: amount, payment: fd.get('payment') || '기타', createdAt: Date.now(), chargeLogId: chargeLogId
+      });
+    }
+  }
+  ui.chargeFormOpen = false;
+  ui.editingChargeId = null;
+  ui.chargeError = '';
+  persist();
+}
+
+function handleDayDeductSubmit(form) {
+  var fd = new FormData(form);
+  var customerId = fd.get('customerId') || null;
+  var custCheck = customerId ? state.customers.find(function (x) { return x.id === customerId; }) : null;
+  var isMember = !!custCheck && custCheck.type !== 'nonmember';
+  var itemsResult = computeNailItemsFromFormData(fd, isMember);
+  var amount = itemsResult.labels.length ? itemsResult.total : parseAmountValue(fd.get('amount'));
+  var applyCashDiscount = fd.get('applyCashDiscount') === 'on';
+  if (!isMember && applyCashDiscount) {
+    amount = Math.max(0, amount - 5000);
+  }
+  var saleId = fd.get('saleId') || null;
+  var oldSale = saleId ? state.sales.find(function (s) { return s.id === saleId; }) : null;
+  if (isMember) {
+    var availableBalance = customerBalance(customerId) + (oldSale ? Number(oldSale.amount || 0) : 0);
+    if (amount > availableBalance) {
+      ui.dayDeductError = '잘못 입력했어요. 차감 금액이 보유 잔액(' + won(availableBalance) + ')보다 많아요.';
+      renderApp();
+      return;
+    }
+  }
+  ui.dayDeductError = '';
+  var payment = fd.get('payment') || '기타';
+  var memoInput = itemsResult.labels.length ? itemsResult.labels.join(', ') : '';
+
+  if (oldSale) {
+    var log = oldSale.chargeLogId ? state.chargeLogs.find(function (l) { return l.id === oldSale.chargeLogId; }) : null;
+    var finalMemo = memoInput || oldSale.treatment || '사용';
+    oldSale.amount = amount; oldSale.payment = payment; oldSale.memo = finalMemo;
+    if (log) { log.amount = amount; log.memo = finalMemo; }
+  } else {
+    var r = state.reservations.find(function (x) { return x.id === ui.dayDeductReservationId; });
+    var date = (r && r.date) || todayStr();
+    var treatment = (r && r.treatment) || '';
+    var memo = memoInput || treatment || '사용';
+    var chargeLogId = null;
+    if (isMember) {
+      chargeLogId = uid();
+      state.chargeLogs.push({
+        id: chargeLogId, customerId: customerId, type: 'deduct',
+        date: date, amount: amount, memo: memo, createdAt: Date.now()
+      });
+    }
+    state.sales.push({
+      id: uid(), date: date, type: isMember ? '회원' : '비회원', customerId: customerId, customerName: custCheck ? custCheck.name : (r && r.customerName) || '',
+      treatment: treatment || memo, amount: amount, payment: payment, memo: memo, createdAt: Date.now(), chargeLogId: chargeLogId,
+      reservationId: r ? r.id : null
+    });
+  }
+  ui.dayDeductReservationId = null;
+  ui.editingDayDeductSaleId = null;
+  persist();
+}
+
+function handleRescheduleSubmit(form) {
+  var fd = new FormData(form);
+  var id = fd.get('reservationId');
+  var r = state.reservations.find(function (x) { return x.id === id; });
+  if (r) { r.date = fd.get('date'); r.time = fd.get('time'); }
+  ui.rescheduleReservationId = null;
+  persist();
+}
+
+function onAppSubmit(e) {
+  e.preventDefault();
+  try {
+    if (e.target.id === 'sale-form') handleSaleSubmit(e.target);
+    else if (e.target.id === 'customer-form') handleCustomerSubmit(e.target);
+    else if (e.target.id === 'bulk-form') handleBulkSubmit(e.target);
+    else if (e.target.id === 'reservation-form') handleReservationSubmit(e.target);
+    else if (e.target.id === 'charge-form') handleChargeSubmit(e.target);
+    else if (e.target.id === 'day-deduct-form') handleDayDeductSubmit(e.target);
+    else if (e.target.id === 'reschedule-form') handleRescheduleSubmit(e.target);
+    else if (e.target.id === 'customer-reservation-form') handleCustomerReservationSubmit(e.target);
+  } catch (err) {
+    console.error('submit failed', err);
+    alert('저장 중 오류가 발생했습니다: ' + (err && err.message ? err.message : err));
+  }
+}
+
+function onAppClick(e) {
+  var el = e.target.closest('[data-action]');
+  if (!el) return;
+  var action = el.dataset.action;
+  var id = el.dataset.id;
+  if (action === 'switch-tab') {
+    var oldIdx = TAB_ORDER.indexOf(ui.tab === 'today' ? 'calendar' : ui.tab);
+    var newIdx = TAB_ORDER.indexOf(el.dataset.tab);
+    tabAnimDir = (oldIdx !== -1 && newIdx !== -1) ? (newIdx > oldIdx ? 'next' : newIdx < oldIdx ? 'prev' : null) : null;
+    ui.tab = el.dataset.tab; lsSet('ns_tab', ui.tab);
+    ui.dayDeductReservationId = null; ui.editingDayDeductSaleId = null; ui.dayDeductError = '';
+    ui.showDeductsForReservationId = null; ui.rescheduleReservationId = null; ui.pendingDelete = null;
+    ui.smsPanelReservationId = null;
+    renderApp();
+  }
+  else if (action === 'open-sale-form') { ui.saleFormOpen = true; renderApp(); }
+  else if (action === 'close-sale-form') { ui.saleFormOpen = false; renderApp(); }
+  else if (action === 'open-customer-form') { ui.customerFormOpen = true; ui.editingCustomerId = null; renderApp(); }
+  else if (action === 'close-customer-form') { ui.customerFormOpen = false; ui.editingCustomerId = null; renderApp(); }
+  else if (action === 'open-bulk-form') { ui.bulkFormOpen = true; ui.bulkError = ''; renderApp(); }
+  else if (action === 'close-bulk-form') { ui.bulkFormOpen = false; ui.bulkError = ''; renderApp(); }
+  else if (action === 'view-customer') { ui.detailCustomerId = id; ui.chargeFormOpen = false; ui.editingChargeId = null; ui.chargeError = ''; ui.customerReservationFormOpen = false; ui.customerReservationError = ''; lsSet('ns_detailCustomerId', id); renderApp(); }
+  else if (action === 'close-detail') { ui.detailCustomerId = null; ui.pendingDelete = null; ui.chargeFormOpen = false; ui.editingChargeId = null; ui.chargeError = ''; ui.customerReservationFormOpen = false; ui.customerReservationError = ''; lsSet('ns_detailCustomerId', null); renderApp(); }
+  else if (action === 'open-customer-reservation-form') { ui.customerReservationFormOpen = true; ui.customerReservationError = ''; renderApp(); }
+  else if (action === 'close-customer-reservation-form') { ui.customerReservationFormOpen = false; ui.customerReservationError = ''; renderApp(); }
+  else if (action === 'edit-customer') { ui.editingCustomerId = id; ui.customerFormOpen = true; ui.detailCustomerId = null; ui.tab = 'members'; lsSet('ns_tab', ui.tab); lsSet('ns_detailCustomerId', null); renderApp(); }
+  else if (action === 'delete-sale') { ui.pendingDelete = { type: 'sale', id: id }; renderApp(); }
+  else if (action === 'delete-customer') { ui.pendingDelete = { type: 'customer', id: id }; renderApp(); }
+  else if (action === 'confirm-delete-sale') {
+    var saleToDelete = state.sales.find(function (s) { return s.id === id; });
+    if (saleToDelete && saleToDelete.chargeLogId) {
+      state.chargeLogs = state.chargeLogs.filter(function (l) { return l.id !== saleToDelete.chargeLogId; });
+    }
+    state.sales = state.sales.filter(function (s) { return s.id !== id; });
+    ui.pendingDelete = null;
+    persist();
+  }
+  else if (action === 'confirm-delete-customer') { state.customers = state.customers.filter(function (c) { return c.id !== id; }); ui.detailCustomerId = null; ui.pendingDelete = null; lsSet('ns_detailCustomerId', null); persist(); }
+  else if (action === 'toggle-customer-delete-mode') { ui.customerDeleteMode = !ui.customerDeleteMode; ui.customerDeleteSelectedIds = []; ui.pendingDelete = null; renderApp(); }
+  else if (action === 'toggle-customer-delete-select') {
+    var selIdx = ui.customerDeleteSelectedIds.indexOf(id);
+    if (selIdx === -1) ui.customerDeleteSelectedIds.push(id); else ui.customerDeleteSelectedIds.splice(selIdx, 1);
+    renderApp();
+  }
+  else if (action === 'bulk-delete-customers') { ui.pendingDelete = { type: 'bulk-customers', id: null }; renderApp(); }
+  else if (action === 'confirm-bulk-delete-customers') {
+    var idsToDelete = ui.customerDeleteSelectedIds.slice();
+    state.customers = state.customers.filter(function (c) { return idsToDelete.indexOf(c.id) === -1; });
+    ui.customerDeleteSelectedIds = [];
+    ui.customerDeleteMode = false;
+    ui.pendingDelete = null;
+    persist();
+  }
+  else if (action === 'cancel-delete') { ui.pendingDelete = null; renderApp(); }
+  else if (action === 'cal-prev-month') { calAnimDir = 'prev'; ui.calMonth--; if (ui.calMonth < 0) { ui.calMonth = 11; ui.calYear--; } lsSet('ns_calYear', ui.calYear); lsSet('ns_calMonth', ui.calMonth); renderApp(); }
+  else if (action === 'cal-next-month') { calAnimDir = 'next'; ui.calMonth++; if (ui.calMonth > 11) { ui.calMonth = 0; ui.calYear++; } lsSet('ns_calYear', ui.calYear); lsSet('ns_calMonth', ui.calMonth); renderApp(); }
+  else if (action === 'cal-prev-year') { calAnimDir = 'prev'; ui.calYear--; lsSet('ns_calYear', ui.calYear); renderApp(); }
+  else if (action === 'cal-next-year') { calAnimDir = 'next'; ui.calYear++; lsSet('ns_calYear', ui.calYear); renderApp(); }
+  else if (action === 'set-stats-period') { ui.statsPeriod = el.dataset.period; renderApp(); }
+  else if (action === 'stats-ref-today') { ui.statsRefDate = todayStr(); renderApp(); }
+  else if (action === 'set-stats-view') { ui.statsView = el.dataset.view; ui.filterType = el.dataset.view === 'membership' ? 'membership' : 'all'; renderApp(); }
+  else if (action === 'set-history-period') { ui.filterPeriod = el.dataset.period; renderApp(); }
+  else if (action === 'set-history-filter') { ui.filterType = el.dataset.filter; renderApp(); }
+  else if (action === 'select-day') { ui.calSelectedDate = el.dataset.date; ui.reservationFormOpen = false; ui.editingReservationId = null; ui.dayDeductReservationId = null; ui.editingDayDeductSaleId = null; ui.dayDeductError = ''; ui.showDeductsForReservationId = null; ui.rescheduleReservationId = null; ui.smsPanelReservationId = null; ui.pendingDelete = null; lsSet('ns_calSelectedDate', ui.calSelectedDate); renderApp(); }
+  else if (action === 'close-day-modal') { ui.calSelectedDate = null; ui.reservationFormOpen = false; ui.editingReservationId = null; ui.pendingDelete = null; ui.dayDeductReservationId = null; ui.editingDayDeductSaleId = null; ui.dayDeductError = ''; ui.showDeductsForReservationId = null; ui.rescheduleReservationId = null; ui.smsPanelReservationId = null; lsSet('ns_calSelectedDate', null); renderApp(); }
+  else if (action === 'open-reservation-form') { ui.reservationFormOpen = true; ui.editingReservationId = null; renderApp(); }
+  else if (action === 'close-reservation-form') { ui.reservationFormOpen = false; ui.editingReservationId = null; renderApp(); }
+  else if (action === 'day-modal-prev' || action === 'day-modal-next' || action === 'day-modal-today') {
+    var base = ui.calSelectedDate || todayStr();
+    ui.calSelectedDate = action === 'day-modal-today' ? todayStr() : shiftDateStr(base, action === 'day-modal-next' ? 1 : -1);
+    ui.reservationFormOpen = false; ui.editingReservationId = null; ui.dayDeductReservationId = null; ui.editingDayDeductSaleId = null;
+    ui.dayDeductError = ''; ui.showDeductsForReservationId = null; ui.rescheduleReservationId = null; ui.smsPanelReservationId = null; ui.pendingDelete = null;
+    lsSet('ns_calSelectedDate', ui.calSelectedDate);
+    renderApp();
+  }
+  else if (action === 'edit-reservation') { ui.editingReservationId = id; ui.reservationFormOpen = true; renderApp(); }
+  else if (action === 'delete-reservation') { ui.pendingDelete = { type: 'reservation', id: id }; renderApp(); }
+  else if (action === 'confirm-delete-reservation') {
+    var salesToRemove = state.sales.filter(function (s) { return s.reservationId === id; });
+    var chargeLogIdsToRemove = salesToRemove.map(function (s) { return s.chargeLogId; }).filter(Boolean);
+    state.sales = state.sales.filter(function (s) { return s.reservationId !== id; });
+    if (chargeLogIdsToRemove.length) {
+      state.chargeLogs = state.chargeLogs.filter(function (l) { return chargeLogIdsToRemove.indexOf(l.id) === -1; });
+    }
+    state.reservations = state.reservations.filter(function (r) { return r.id !== id; });
+    ui.pendingDelete = null;
+    persist();
+  }
+  else if (action === 'open-charge-form') { ui.chargeFormOpen = true; ui.chargeFormType = el.dataset.type === 'deduct' ? 'deduct' : 'charge'; ui.editingChargeId = null; ui.chargeError = ''; renderApp(); }
+  else if (action === 'close-charge-form') { ui.chargeFormOpen = false; ui.editingChargeId = null; ui.chargeError = ''; renderApp(); }
+  else if (action === 'edit-charge') {
+    var editLog = state.chargeLogs.find(function (l) { return l.id === id; });
+    if (editLog) { ui.chargeFormOpen = true; ui.chargeFormType = editLog.type; ui.editingChargeId = id; ui.chargeError = ''; }
+    renderApp();
+  }
+  else if (action === 'delete-charge') { ui.pendingDelete = { type: 'charge', id: id }; renderApp(); }
+  else if (action === 'confirm-delete-charge') {
+    var chargeSaleToRemove = state.sales.find(function (s) { return s.chargeLogId === id; });
+    if (chargeSaleToRemove) state.sales = state.sales.filter(function (s) { return s.id !== chargeSaleToRemove.id; });
+    state.chargeLogs = state.chargeLogs.filter(function (l) { return l.id !== id; });
+    ui.pendingDelete = null;
+    persist();
+  }
+  else if (action === 'open-day-deduct') { ui.dayDeductReservationId = id; ui.editingDayDeductSaleId = null; ui.dayDeductError = ''; renderApp(); }
+  else if (action === 'close-day-deduct') { ui.dayDeductReservationId = null; ui.editingDayDeductSaleId = null; ui.dayDeductError = ''; renderApp(); }
+  else if (action === 'toggle-day-deducts') { ui.showDeductsForReservationId = ui.showDeductsForReservationId === id ? null : id; ui.editingDayDeductSaleId = null; ui.dayDeductError = ''; renderApp(); }
+  else if (action === 'open-reschedule') { ui.rescheduleReservationId = id; renderApp(); }
+  else if (action === 'close-reschedule') { ui.rescheduleReservationId = null; renderApp(); }
+  else if (action === 'toggle-sms-panel') { ui.smsPanelReservationId = ui.smsPanelReservationId === id ? null : id; renderApp(); }
+  else if (action === 'copy-sms-text') { copySmsText(id); }
+  else if (action === 'copy-sms-phone') { copySmsPhone(id); }
+  else if (action === 'edit-day-deduct') {
+    var deductSale = state.sales.find(function (s) { return s.id === id; });
+    if (deductSale) { ui.dayDeductReservationId = deductSale.reservationId; ui.editingDayDeductSaleId = deductSale.id; ui.dayDeductError = ''; }
+    renderApp();
+  }
+  else if (action === 'delete-day-deduct') { ui.pendingDelete = { type: 'daydeduct', id: id }; renderApp(); }
+  else if (action === 'confirm-delete-day-deduct') {
+    var saleToUndo = state.sales.find(function (s) { return s.id === id; });
+    if (saleToUndo) {
+      if (saleToUndo.chargeLogId) {
+        state.chargeLogs = state.chargeLogs.filter(function (l) { return l.id !== saleToUndo.chargeLogId; });
+      }
+      state.sales = state.sales.filter(function (s) { return s.id !== id; });
+    }
+    ui.pendingDelete = null;
+    persist();
+  }
+}
+
+function buildDocument() {
+  var headHTML = HEAD_HTML;
+  var scriptText = document.getElementById('app-script').textContent;
+  var dataJSON = JSON.stringify(state);
+  return '<!DOCTYPE html>\n<html lang="ko">\n<head>\n' + headHTML + '\n</head>\n<body>\n' +
+    '<div id="app"></div>\n' +
+    '<script id="app-data" type="application/json">' + dataJSON + '<' + '/script>\n' +
+    '<script id="app-script">' + scriptText + '<' + '/script>\n' +
+    '</body>\n</html>';
+}
+
+function ensureSaveBanner() {
+  if (saveBannerEl) return saveBannerEl;
+  var el = document.createElement('div');
+  el.id = 'save-banner';
+  document.body.appendChild(el);
+  saveBannerEl = el;
+  return el;
+}
+
+function updateSaveBanner() {
+  var el = ensureSaveBanner();
+  if (saveState === 'error') {
+    el.style.display = 'block';
+    el.className = 'save-banner save-banner-error';
+    el.textContent = '저장 실패 - 재시도 중입니다. 화면을 닫지 마세요';
+  } else {
+    el.style.display = 'none';
+    el.textContent = '';
+  }
+}
+
+function saveStandaloneLocal() {
+  try {
+    localStorage.setItem(STANDALONE_KEY, JSON.stringify(state));
+    saveState = 'idle';
+  } catch (e) {
+    console.error('local save failed', e);
+    saveState = 'error';
+  }
+  updateSaveBanner();
+}
+
+function doPublish() {
+  if (STANDALONE) { saveStandaloneLocal(); return; }
+  if (!artifactApi) { saveState = 'pending'; updateSaveBanner(); return; }
+  saveState = 'saving'; updateSaveBanner();
+  try {
+    artifactApi.publish(buildDocument()).then(function () {
+      saveState = 'idle'; updateSaveBanner();
+    }).catch(function (e) {
+      console.error('save failed', e);
+      saveState = 'error'; updateSaveBanner();
+      scheduleSaveRetry();
+    });
+  } catch (e) {
+    console.error('save failed', e);
+    saveState = 'error'; updateSaveBanner();
+    scheduleSaveRetry();
+  }
+}
+
+function scheduleSaveRetry() {
+  if (saveRetryTimer) return;
+  saveRetryTimer = setTimeout(function () {
+    saveRetryTimer = null;
+    doPublish();
+  }, 2000);
+}
+
+function persist() {
+  renderApp();
+  doPublish();
+}
+
+var touchStartX = null;
+var touchStartY = null;
+var touchStartInNav = false;
+var touchStartOnControl = false;
+
+function onAppTouchStart(e) {
+  if (ui.detailCustomerId) return;
+  if (!e.touches || !e.touches.length) return;
+  touchStartInNav = !!(e.target && e.target.closest && e.target.closest('.cal-nav'));
+  touchStartOnControl = !!(e.target && e.target.closest && e.target.closest('button, input, select, textarea, a, label'));
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+}
+
+function onAppTouchEnd(e) {
+  if (touchStartX === null || !e.changedTouches || !e.changedTouches.length) return;
+  var dx = e.changedTouches[0].clientX - touchStartX;
+  var dy = e.changedTouches[0].clientY - touchStartY;
+  var wasInNav = touchStartInNav;
+  var wasOnControl = touchStartOnControl;
+  touchStartX = null; touchStartY = null; touchStartInNav = false; touchStartOnControl = false;
+  if (wasOnControl) return;
+  var absDx = Math.abs(dx), absDy = Math.abs(dy);
+
+  if (absDx >= 60 && absDx > absDy * 1.5) {
+    if (ui.calSelectedDate) {
+      ui.calSelectedDate = shiftDateStr(ui.calSelectedDate, dx < 0 ? 1 : -1);
+      ui.reservationFormOpen = false; ui.editingReservationId = null; ui.dayDeductReservationId = null; ui.editingDayDeductSaleId = null;
+      ui.dayDeductError = ''; ui.showDeductsForReservationId = null; ui.rescheduleReservationId = null; ui.smsPanelReservationId = null; ui.pendingDelete = null;
+      lsSet('ns_calSelectedDate', ui.calSelectedDate);
+      renderApp();
+    } else if (ui.tab === 'calendar' && !wasInNav) {
+      calAnimDir = dx < 0 ? 'next' : 'prev';
+      if (dx < 0) { ui.calMonth++; if (ui.calMonth > 11) { ui.calMonth = 0; ui.calYear++; } }
+      else { ui.calMonth--; if (ui.calMonth < 0) { ui.calMonth = 11; ui.calYear--; } }
+      lsSet('ns_calYear', ui.calYear); lsSet('ns_calMonth', ui.calMonth);
+      renderApp();
+    }
+  } else if (absDy >= 90 && absDy > absDx * 1.5 && !ui.calSelectedDate) {
+    switchTabBySwipe(dy < 0 ? 1 : -1);
+  }
+}
+
+function onAppKeydown(e) {
+  if (e.key !== 'Enter') return;
+  var el = e.target;
+  if (!el || !el.form) return;
+  var tag = el.tagName;
+  if (tag === 'TEXTAREA') return;
+  if (tag === 'INPUT' && (el.type === 'submit' || el.type === 'button')) return;
+  e.preventDefault();
+}
+
+function init() {
+  window.addEventListener('error', function (e) {
+    try { alert('오류가 발생했습니다: ' + (e && e.message ? e.message : e)); } catch (_e) {}
+  });
+  document.getElementById('app').addEventListener('click', function (e) {
+    try { onAppClick(e); } catch (err) {
+      console.error('click failed', err);
+      alert('처리 중 오류가 발생했습니다: ' + (err && err.message ? err.message : err));
+    }
+  });
+  document.getElementById('app').addEventListener('submit', onAppSubmit);
+  document.getElementById('app').addEventListener('keydown', onAppKeydown);
+  document.getElementById('app').addEventListener('touchstart', onAppTouchStart, { passive: true });
+  document.getElementById('app').addEventListener('touchend', onAppTouchEnd, { passive: true });
+  var migrated = migrateCustomerPhones();
+  renderApp();
+  window.addEventListener('beforeunload', function (e) {
+    if (saveState === 'pending' || saveState === 'saving' || saveState === 'error') {
+      e.preventDefault();
+      e.returnValue = '';
+    }
+  });
+  if (window.claude && window.claude.use) {
+    window.claude.use('artifact').then(function (a) {
+      artifactApi = a;
+      if (migrated || saveState === 'pending' || saveState === 'error') doPublish();
+    });
+  }
+}
+init();
+</script>
+</body>
+</html>
