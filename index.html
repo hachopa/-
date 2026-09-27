@@ -199,8 +199,408 @@
 </head>
 <body>
 <div id="app"></div>
-<script id="app-data" type="application/json">{"customers":[{"id":"mudx3r1bofwzx","name":"장승아","phone":"01025141266","firstVisit":"2026-09-23","type":"member","createdAt":1790156742815},{"id":"mudx48xh9hbgu","name":"오순이","phone":"01029673560","firstVisit":"2026-09-23","type":"member","createdAt":1790156766005},{"id":"mudx51a9a6yxt","name":"최윤영","phone":"01053909584","firstVisit":"2026-09-23","type":"member","createdAt":1790156802753},{"id":"mudx5h347fjnm","name":"이시헌","phone":"01091554106","firstVisit":"2026-09-23","type":"member","createdAt":1790156823232},{"id":"mudynwlr9xhzl","name":"김세현","phone":"01042423145","firstVisit":"2026-09-23","type":"nonmember","createdAt":1790159362767}],"sales":[{"id":"mudx6dk4a0vxq","date":"2026-09-23","type":"회원","isMembership":true,"customerId":"mudx48xh9hbgu","customerName":"오순이","treatment":"MEMBERSHIP","amount":200000,"payment":"계좌이체","createdAt":1790156865316,"chargeLogId":"mudx6dk49cn7h"},{"id":"mudx7aka8auyb","date":"2026-09-23","type":"회원","isMembership":true,"customerId":"mudx5h347fjnm","customerName":"이시헌","treatment":"MEMBERSHIP","amount":130000,"payment":"계좌이체","createdAt":1790156908090,"chargeLogId":"mudx7akajgpuq"},{"id":"mudx7ni20mwmm","date":"2026-09-23","type":"회원","isMembership":true,"customerId":"mudx3r1bofwzx","customerName":"장승아","treatment":"MEMBERSHIP","amount":120000,"payment":"계좌이체","createdAt":1790156924858,"chargeLogId":"mudx7ni21bf0o"},{"id":"mudx7zkpit3r2","date":"2026-09-23","type":"회원","isMembership":true,"customerId":"mudx51a9a6yxt","customerName":"최윤영","treatment":"MEMBERSHIP","amount":100000,"payment":"계좌이체","createdAt":1790156940505,"chargeLogId":"mudx7zko44f15"}],"reservations":[],"chargeLogs":[{"id":"muc2okims29qu","customerId":"muc27vzpp0lyn","type":"charge","date":"2026-09-22","amount":500000,"memo":"","createdAt":1790045179871},{"id":"muc3l7k391vue","customerId":"muc27vzpp0lyn","type":"deduct","date":"2026-09-22","amount":150000,"memo":"사용","createdAt":1790046702723},{"id":"muc3rieolunwo","customerId":"muc27vzpp0lyn","type":"deduct","date":"2026-09-22","amount":150000,"memo":"젤네일","createdAt":1790046996720},{"id":"muc42pr4jfsvu","customerId":"muc4114i8nkca","type":"charge","date":"2026-09-22","amount":500000,"memo":"","createdAt":1790047519457},{"id":"muc42yx3gzdvc","customerId":"muc40gigyiql4","type":"charge","date":"2026-09-22","amount":500000,"memo":"","createdAt":1790047531335},{"id":"muc4as7ud0zhw","customerId":"muc40gigyiql4","type":"deduct","date":"2026-09-22","amount":150000,"memo":"제거","createdAt":1790047895898},{"id":"mudx6dk49cn7h","customerId":"mudx48xh9hbgu","type":"charge","date":"2026-09-23","amount":200000,"createdAt":1790156865316},{"id":"mudx7akajgpuq","customerId":"mudx5h347fjnm","type":"charge","date":"2026-09-23","amount":130000,"createdAt":1790156908090},{"id":"mudx7ni21bf0o","customerId":"mudx3r1bofwzx","type":"charge","date":"2026-09-23","amount":120000,"createdAt":1790156924858},{"id":"mudx7zko44f15","customerId":"mudx51a9a6yxt","type":"charge","date":"2026-09-23","amount":100000,"createdAt":1790156940505}]}</script>
-<script id="app-build" type="application/json">"bmuer6hrdbvujx"</script>
+<script id="app-data" type="application/json">{
+  "customers": [
+    {
+      "id": "mudx3r1bofwzx",
+      "name": "장승아",
+      "phone": "01025141266",
+      "firstVisit": "2026-09-23",
+      "type": "member",
+      "createdAt": 1790156742815
+    },
+    {
+      "id": "mudx48xh9hbgu",
+      "name": "오순이",
+      "phone": "01029673560",
+      "firstVisit": "2026-09-23",
+      "type": "member",
+      "createdAt": 1790156766005
+    },
+    {
+      "id": "mudx51a9a6yxt",
+      "name": "최윤영",
+      "phone": "01053909584",
+      "firstVisit": "2026-09-23",
+      "type": "member",
+      "createdAt": 1790156802753
+    },
+    {
+      "id": "mudx5h347fjnm",
+      "name": "이시헌",
+      "phone": "01091554106",
+      "firstVisit": "2026-09-23",
+      "type": "member",
+      "createdAt": 1790156823232
+    },
+    {
+      "id": "mudynwlr9xhzl",
+      "name": "김세현",
+      "phone": "01042423145",
+      "firstVisit": "2026-09-23",
+      "type": "nonmember",
+      "createdAt": 1790159362767
+    },
+    {
+      "id": "muez84vask8rt",
+      "name": "김은연",
+      "phone": "01093046493",
+      "firstVisit": "2026-09-24",
+      "type": "member",
+      "createdAt": 1790220772774
+    },
+    {
+      "id": "muez92q1kzy69",
+      "name": "김지현",
+      "phone": "01076569863",
+      "firstVisit": "2026-09-24",
+      "type": "member",
+      "createdAt": 1790220816649
+    },
+    {
+      "id": "muez9xcwp44he",
+      "name": "김유정",
+      "phone": "01045231912",
+      "firstVisit": "2026-09-24",
+      "type": "member",
+      "createdAt": 1790220856352
+    },
+    {
+      "id": "muezewfcc3g96",
+      "name": "김진아",
+      "phone": "01037510587",
+      "firstVisit": "2026-09-24",
+      "type": "member",
+      "createdAt": 1790221088424
+    },
+    {
+      "id": "muf0f45c6n6n5",
+      "name": "곽도연",
+      "phone": "01026120081",
+      "firstVisit": "2026-09-24",
+      "type": "member",
+      "createdAt": 1790222778048
+    },
+    {
+      "id": "muf0g6t21riow",
+      "name": "조세진",
+      "phone": "01036238656",
+      "firstVisit": "2026-09-24",
+      "type": "member",
+      "createdAt": 1790222828150
+    },
+    {
+      "id": "mufixjgxdglue",
+      "name": "김수진",
+      "phone": "01051280506",
+      "firstVisit": "2026-09-24",
+      "type": "member",
+      "createdAt": 1790253870801
+    }
+  ],
+  "sales": [
+    {
+      "id": "mudx6dk4a0vxq",
+      "date": "2026-09-23",
+      "type": "회원",
+      "isMembership": true,
+      "customerId": "mudx48xh9hbgu",
+      "customerName": "오순이",
+      "treatment": "MEMBERSHIP",
+      "amount": 200000,
+      "payment": "계좌이체",
+      "createdAt": 1790156865316,
+      "chargeLogId": "mudx6dk49cn7h"
+    },
+    {
+      "id": "mudx7aka8auyb",
+      "date": "2026-09-23",
+      "type": "회원",
+      "isMembership": true,
+      "customerId": "mudx5h347fjnm",
+      "customerName": "이시헌",
+      "treatment": "MEMBERSHIP",
+      "amount": 130000,
+      "payment": "계좌이체",
+      "createdAt": 1790156908090,
+      "chargeLogId": "mudx7akajgpuq"
+    },
+    {
+      "id": "mudx7ni20mwmm",
+      "date": "2026-09-23",
+      "type": "회원",
+      "isMembership": true,
+      "customerId": "mudx3r1bofwzx",
+      "customerName": "장승아",
+      "treatment": "MEMBERSHIP",
+      "amount": 120000,
+      "payment": "계좌이체",
+      "createdAt": 1790156924858,
+      "chargeLogId": "mudx7ni21bf0o"
+    },
+    {
+      "id": "mudx7zkpit3r2",
+      "date": "2026-09-23",
+      "type": "회원",
+      "isMembership": true,
+      "customerId": "mudx51a9a6yxt",
+      "customerName": "최윤영",
+      "treatment": "MEMBERSHIP",
+      "amount": 100000,
+      "payment": "계좌이체",
+      "createdAt": 1790156940505,
+      "chargeLogId": "mudx7zko44f15"
+    },
+    {
+      "id": "muez8mczjp06e",
+      "date": "2026-09-24",
+      "type": "회원",
+      "isMembership": true,
+      "customerId": "muez84vask8rt",
+      "customerName": "김은연",
+      "treatment": "MEMBERSHIP",
+      "amount": 295000,
+      "payment": "계좌이체",
+      "createdAt": 1790220795443,
+      "chargeLogId": "muez8mczwfg5e"
+    },
+    {
+      "id": "muez9d7vbqaxg",
+      "date": "2026-09-24",
+      "type": "회원",
+      "isMembership": true,
+      "customerId": "muez92q1kzy69",
+      "customerName": "김지현",
+      "treatment": "MEMBERSHIP",
+      "amount": 197000,
+      "payment": "계좌이체",
+      "createdAt": 1790220830251,
+      "chargeLogId": "muez9d7vgd3m7"
+    },
+    {
+      "id": "mueza7p0xuyyy",
+      "date": "2026-09-24",
+      "type": "회원",
+      "isMembership": true,
+      "customerId": "muez9xcwp44he",
+      "customerName": "김유정",
+      "treatment": "MEMBERSHIP",
+      "amount": 125000,
+      "payment": "계좌이체",
+      "createdAt": 1790220869748,
+      "chargeLogId": "mueza7p0674mu"
+    },
+    {
+      "id": "muezg36sjwk84",
+      "date": "2026-09-24",
+      "type": "회원",
+      "isMembership": true,
+      "customerId": "muezewfcc3g96",
+      "customerName": "김진아",
+      "treatment": "MEMBERSHIP",
+      "amount": 115000,
+      "payment": "카드",
+      "createdAt": 1790221143844,
+      "chargeLogId": "muezg36s40yss"
+    },
+    {
+      "id": "muf0f45ci5ws9",
+      "date": "2026-09-24",
+      "type": "회원",
+      "isMembership": true,
+      "customerId": "muf0f45c6n6n5",
+      "customerName": "곽도연",
+      "treatment": "MEMBERSHIP",
+      "amount": 255000,
+      "payment": "",
+      "createdAt": 1790222778048,
+      "chargeLogId": "muf0f45c50qqq"
+    },
+    {
+      "id": "muf0g6t32zwhl",
+      "date": "2026-09-24",
+      "type": "회원",
+      "isMembership": true,
+      "customerId": "muf0g6t21riow",
+      "customerName": "조세진",
+      "treatment": "MEMBERSHIP",
+      "amount": 240000,
+      "payment": "",
+      "createdAt": 1790222828151,
+      "chargeLogId": "muf0g6t2nzj9a"
+    },
+    {
+      "id": "mufixjgx6duu0",
+      "date": "2026-09-24",
+      "type": "회원",
+      "isMembership": true,
+      "customerId": "mufixjgxdglue",
+      "customerName": "김수진",
+      "treatment": "MEMBERSHIP",
+      "amount": 425000,
+      "payment": "",
+      "createdAt": 1790253870801,
+      "chargeLogId": "mufixjgxolqdd"
+    }
+  ],
+  "reservations": [
+    {
+      "id": "muf0gq9h1tx49",
+      "date": "2026-09-28",
+      "time": "11:30",
+      "customerId": "muf0g6t21riow",
+      "customerName": "조세진",
+      "phone": "01036238656",
+      "treatment": "",
+      "createdAt": 1790222853365
+    }
+  ],
+  "chargeLogs": [
+    {
+      "id": "muc2okims29qu",
+      "customerId": "muc27vzpp0lyn",
+      "type": "charge",
+      "date": "2026-09-22",
+      "amount": 500000,
+      "memo": "",
+      "createdAt": 1790045179871
+    },
+    {
+      "id": "muc3l7k391vue",
+      "customerId": "muc27vzpp0lyn",
+      "type": "deduct",
+      "date": "2026-09-22",
+      "amount": 150000,
+      "memo": "사용",
+      "createdAt": 1790046702723
+    },
+    {
+      "id": "muc3rieolunwo",
+      "customerId": "muc27vzpp0lyn",
+      "type": "deduct",
+      "date": "2026-09-22",
+      "amount": 150000,
+      "memo": "젤네일",
+      "createdAt": 1790046996720
+    },
+    {
+      "id": "muc42pr4jfsvu",
+      "customerId": "muc4114i8nkca",
+      "type": "charge",
+      "date": "2026-09-22",
+      "amount": 500000,
+      "memo": "",
+      "createdAt": 1790047519457
+    },
+    {
+      "id": "muc42yx3gzdvc",
+      "customerId": "muc40gigyiql4",
+      "type": "charge",
+      "date": "2026-09-22",
+      "amount": 500000,
+      "memo": "",
+      "createdAt": 1790047531335
+    },
+    {
+      "id": "muc4as7ud0zhw",
+      "customerId": "muc40gigyiql4",
+      "type": "deduct",
+      "date": "2026-09-22",
+      "amount": 150000,
+      "memo": "제거",
+      "createdAt": 1790047895898
+    },
+    {
+      "id": "mudx6dk49cn7h",
+      "customerId": "mudx48xh9hbgu",
+      "type": "charge",
+      "date": "2026-09-23",
+      "amount": 200000,
+      "createdAt": 1790156865316
+    },
+    {
+      "id": "mudx7akajgpuq",
+      "customerId": "mudx5h347fjnm",
+      "type": "charge",
+      "date": "2026-09-23",
+      "amount": 130000,
+      "createdAt": 1790156908090
+    },
+    {
+      "id": "mudx7ni21bf0o",
+      "customerId": "mudx3r1bofwzx",
+      "type": "charge",
+      "date": "2026-09-23",
+      "amount": 120000,
+      "createdAt": 1790156924858
+    },
+    {
+      "id": "mudx7zko44f15",
+      "customerId": "mudx51a9a6yxt",
+      "type": "charge",
+      "date": "2026-09-23",
+      "amount": 100000,
+      "createdAt": 1790156940505
+    },
+    {
+      "id": "muez8mczwfg5e",
+      "customerId": "muez84vask8rt",
+      "type": "charge",
+      "date": "2026-09-24",
+      "amount": 295000,
+      "createdAt": 1790220795443
+    },
+    {
+      "id": "muez9d7vgd3m7",
+      "customerId": "muez92q1kzy69",
+      "type": "charge",
+      "date": "2026-09-24",
+      "amount": 197000,
+      "createdAt": 1790220830251
+    },
+    {
+      "id": "mueza7p0674mu",
+      "customerId": "muez9xcwp44he",
+      "type": "charge",
+      "date": "2026-09-24",
+      "amount": 125000,
+      "createdAt": 1790220869748
+    },
+    {
+      "id": "muezg36s40yss",
+      "customerId": "muezewfcc3g96",
+      "type": "charge",
+      "date": "2026-09-24",
+      "amount": 115000,
+      "createdAt": 1790221143844
+    },
+    {
+      "id": "muf0f45c50qqq",
+      "customerId": "muf0f45c6n6n5",
+      "type": "charge",
+      "date": "2026-09-24",
+      "amount": 255000,
+      "createdAt": 1790222778048
+    },
+    {
+      "id": "muf0g6t2nzj9a",
+      "customerId": "muf0g6t21riow",
+      "type": "charge",
+      "date": "2026-09-24",
+      "amount": 240000,
+      "createdAt": 1790222828151
+    },
+    {
+      "id": "mufixjgxolqdd",
+      "customerId": "mufixjgxdglue",
+      "type": "charge",
+      "date": "2026-09-24",
+      "amount": 425000,
+      "createdAt": 1790253870801
+    }
+  ]
+}</script>
+<script id="app-build" type="application/json">"bmufj0frkz8b4i"</script>
 <script id="app-script">var HEAD_HTML = `
 
 
@@ -588,49 +988,66 @@ function reservationIsMember(r) {
   return !!c && c.type !== 'nonmember';
 }
 
-var NAIL_ITEMS = [
-  { id: 'basic_care', name: '기본케어', member: 20000, nonmember: 30000 },
-  { id: 'basic_onecolor', name: '기본(원컬러)', member: 40000, nonmember: 50000 }
-];
+var NAIL_ITEMS_BY_PART = {
+  hand: [
+    { id: 'basic_care', name: '기본케어', member: 20000, nonmember: 30000 },
+    { id: 'basic_onecolor', name: '기본(원컬러)', member: 40000, nonmember: 50000 }
+  ],
+  foot: [
+    { id: 'basic_care', name: '기본케어', member: 30000, nonmember: 40000 },
+    { id: 'basic_onecolor', name: '기본(원컬러)', member: 55000, nonmember: 65000 }
+  ]
+};
 var GLITTER_UNIT_PRICE = 3000;
 var GLITTER_ALL_PRICE = 20000;
 var STRONG_GEL_PRICE = 10000;
 var OTHER_SHOP_REMOVE_PRICE = 20000;
 var WRAPPING_UNIT_PRICE = 7000;
 
-function nailItemUnitPrice(itemId, isMember) {
-  var item = NAIL_ITEMS.filter(function (x) { return x.id === itemId; })[0];
+function nailItemUnitPrice(partKey, itemId, isMember) {
+  var items = NAIL_ITEMS_BY_PART[partKey] || NAIL_ITEMS_BY_PART.hand;
+  var item = items.filter(function (x) { return x.id === itemId; })[0];
   if (!item) return 0;
   return isMember ? item.member : item.nonmember;
 }
 
+var CARE_PARTS = [
+  { key: 'hand', label: '손' },
+  { key: 'foot', label: '발' }
+];
+
 function computeNailItemsFromForm(form, isMember) {
   var labels = [];
   var total = 0;
-  var care = form.querySelector('input[name="item_basic_care"]');
-  if (care && care.checked) { total += nailItemUnitPrice('basic_care', isMember); labels.push('기본케어'); }
-  var oneColor = form.querySelector('input[name="item_basic_onecolor"]');
-  if (oneColor && oneColor.checked) { total += nailItemUnitPrice('basic_onecolor', isMember); labels.push('기본(원컬러)'); }
-  var glitterEach = form.querySelector('input[name="item_glitter_each"]');
-  var glitterQtyEl = form.querySelector('input[name="glitter_qty"]');
-  if (glitterEach && glitterEach.checked) {
-    var qty = Math.max(1, Number(glitterQtyEl && glitterQtyEl.value) || 1);
-    total += qty * GLITTER_UNIT_PRICE;
-    labels.push('글리터·자석 x' + qty);
-  }
-  var glitterAll = form.querySelector('input[name="item_glitter_all"]');
-  if (glitterAll && glitterAll.checked) { total += GLITTER_ALL_PRICE; labels.push('글리터(전체)'); }
-  var strongGel = form.querySelector('input[name="item_strong_gel"]');
-  if (strongGel && strongGel.checked) { total += STRONG_GEL_PRICE; labels.push('튼튼이(빌더젤)'); }
-  var otherRemoval = form.querySelector('input[name="item_other_removal"]');
-  if (otherRemoval && otherRemoval.checked) { total += OTHER_SHOP_REMOVE_PRICE; labels.push('타샵제거'); }
-  var wrappingEach = form.querySelector('input[name="item_wrapping_each"]');
-  var wrappingQtyEl = form.querySelector('input[name="wrapping_qty"]');
-  if (wrappingEach && wrappingEach.checked) {
-    var wQty = Math.max(1, Number(wrappingQtyEl && wrappingQtyEl.value) || 1);
-    total += wQty * WRAPPING_UNIT_PRICE;
-    labels.push('랩핑 x' + wQty);
-  }
+  CARE_PARTS.forEach(function (part) {
+    var p = 'item_' + part.key + '_';
+    var care = form.querySelector('input[name="' + p + 'basic_care"]');
+    if (care && care.checked) { total += nailItemUnitPrice(part.key, 'basic_care', isMember); labels.push(part.label + ' 기본케어'); }
+    var oneColor = form.querySelector('input[name="' + p + 'basic_onecolor"]');
+    if (oneColor && oneColor.checked) { total += nailItemUnitPrice(part.key, 'basic_onecolor', isMember); labels.push(part.label + ' 기본(원컬러)'); }
+    var glitterEach = form.querySelector('input[name="' + p + 'glitter_each"]');
+    var glitterQtyEl = form.querySelector('input[name="' + p + 'glitter_qty"]');
+    if (glitterEach && glitterEach.checked) {
+      var qty = Math.max(1, Number(glitterQtyEl && glitterQtyEl.value) || 1);
+      total += qty * GLITTER_UNIT_PRICE;
+      labels.push(part.label + ' 글리터·자석 x' + qty);
+    }
+    var glitterAll = form.querySelector('input[name="' + p + 'glitter_all"]');
+    if (glitterAll && glitterAll.checked) { total += GLITTER_ALL_PRICE; labels.push(part.label + ' 글리터(전체)'); }
+    if (part.key !== 'foot') {
+      var strongGel = form.querySelector('input[name="' + p + 'strong_gel"]');
+      if (strongGel && strongGel.checked) { total += STRONG_GEL_PRICE; labels.push(part.label + ' 튼튼이(빌더젤)'); }
+    }
+    var otherRemoval = form.querySelector('input[name="' + p + 'other_removal"]');
+    if (otherRemoval && otherRemoval.checked) { total += OTHER_SHOP_REMOVE_PRICE; labels.push(part.label + ' 타샵제거'); }
+    var wrappingEach = form.querySelector('input[name="' + p + 'wrapping_each"]');
+    var wrappingQtyEl = form.querySelector('input[name="' + p + 'wrapping_qty"]');
+    if (wrappingEach && wrappingEach.checked) {
+      var wQty = Math.max(1, Number(wrappingQtyEl && wrappingQtyEl.value) || 1);
+      total += wQty * WRAPPING_UNIT_PRICE;
+      labels.push(part.label + ' 랩핑 x' + wQty);
+    }
+  });
   return { total: total, labels: labels };
 }
 
@@ -659,146 +1076,191 @@ function parseAmountValue(v) {
 function computeNailItemsFromFormData(fd, isMember) {
   var labels = [];
   var total = 0;
-  if (fd.get('item_basic_care')) { total += nailItemUnitPrice('basic_care', isMember); labels.push('기본케어'); }
-  if (fd.get('item_basic_onecolor')) { total += nailItemUnitPrice('basic_onecolor', isMember); labels.push('기본(원컬러)'); }
-  if (fd.get('item_glitter_each')) {
-    var qty = Math.max(1, Number(fd.get('glitter_qty')) || 1);
-    total += qty * GLITTER_UNIT_PRICE;
-    labels.push('글리터·자석 x' + qty);
-  }
-  if (fd.get('item_glitter_all')) { total += GLITTER_ALL_PRICE; labels.push('글리터(전체)'); }
-  if (fd.get('item_strong_gel')) { total += STRONG_GEL_PRICE; labels.push('튼튼이(빌더젤)'); }
-  if (fd.get('item_other_removal')) { total += OTHER_SHOP_REMOVE_PRICE; labels.push('타샵제거'); }
-  if (fd.get('item_wrapping_each')) {
-    var wQty = Math.max(1, Number(fd.get('wrapping_qty')) || 1);
-    total += wQty * WRAPPING_UNIT_PRICE;
-    labels.push('랩핑 x' + wQty);
-  }
+  CARE_PARTS.forEach(function (part) {
+    var p = 'item_' + part.key + '_';
+    if (fd.get(p + 'basic_care')) { total += nailItemUnitPrice(part.key, 'basic_care', isMember); labels.push(part.label + ' 기본케어'); }
+    if (fd.get(p + 'basic_onecolor')) { total += nailItemUnitPrice(part.key, 'basic_onecolor', isMember); labels.push(part.label + ' 기본(원컬러)'); }
+    if (fd.get(p + 'glitter_each')) {
+      var qty = Math.max(1, Number(fd.get(p + 'glitter_qty')) || 1);
+      total += qty * GLITTER_UNIT_PRICE;
+      labels.push(part.label + ' 글리터·자석 x' + qty);
+    }
+    if (fd.get(p + 'glitter_all')) { total += GLITTER_ALL_PRICE; labels.push(part.label + ' 글리터(전체)'); }
+    if (part.key !== 'foot' && fd.get(p + 'strong_gel')) { total += STRONG_GEL_PRICE; labels.push(part.label + ' 튼튼이(빌더젤)'); }
+    if (fd.get(p + 'other_removal')) { total += OTHER_SHOP_REMOVE_PRICE; labels.push(part.label + ' 타샵제거'); }
+    if (fd.get(p + 'wrapping_each')) {
+      var wQty = Math.max(1, Number(fd.get(p + 'wrapping_qty')) || 1);
+      total += wQty * WRAPPING_UNIT_PRICE;
+      labels.push(part.label + ' 랩핑 x' + wQty);
+    }
+  });
   return { total: total, labels: labels };
 }
 
 function computeCareItemLabelsFromFormData(fd) {
   var labels = [];
-  if (fd.get('care_basic_care')) labels.push('기본케어');
-  if (fd.get('care_basic_onecolor')) labels.push('기본(원컬러)');
-  if (fd.get('care_glitter_each')) {
-    var qty = Math.max(1, Number(fd.get('care_glitter_qty')) || 1);
-    labels.push('글리터·자석 x' + qty);
-  }
-  if (fd.get('care_glitter_all')) labels.push('글리터(전체)');
-  if (fd.get('care_glitter')) labels.push('글리터');
-  if (fd.get('care_strong_gel')) labels.push('튼튼이(빌더젤)');
-  if (fd.get('care_other_removal')) labels.push('타샵제거');
-  if (fd.get('care_wrapping_each')) {
-    var cwQty = Math.max(1, Number(fd.get('care_wrapping_qty')) || 1);
-    labels.push('랩핑 x' + cwQty);
-  }
+  CARE_PARTS.forEach(function (part) {
+    var p = 'care_' + part.key + '_';
+    if (fd.get(p + 'basic_care')) labels.push(part.label + ' 기본케어');
+    if (fd.get(p + 'basic_onecolor')) labels.push(part.label + ' 기본(원컬러)');
+    if (fd.get(p + 'glitter_each')) {
+      var qty = Math.max(1, Number(fd.get(p + 'glitter_qty')) || 1);
+      labels.push(part.label + ' 글리터·자석 x' + qty);
+    }
+    if (fd.get(p + 'glitter_all')) labels.push(part.label + ' 글리터(전체)');
+    if (fd.get(p + 'glitter')) labels.push(part.label + ' 글리터');
+    if (part.key !== 'foot' && fd.get(p + 'strong_gel')) labels.push(part.label + ' 튼튼이(빌더젤)');
+    if (fd.get(p + 'other_removal')) labels.push(part.label + ' 타샵제거');
+    if (fd.get(p + 'wrapping_each')) {
+      var cwQty = Math.max(1, Number(fd.get(p + 'wrapping_qty')) || 1);
+      labels.push(part.label + ' 랩핑 x' + cwQty);
+    }
+  });
   return labels.join(', ');
+}
+
+function renderCarePartOptions(t, part) {
+  var label = part.label;
+  var p = 'care_' + part.key + '_';
+  var hasCare = t.indexOf(label + ' 기본케어') !== -1;
+  var hasOneColor = t.indexOf(label + ' 기본(원컬러)') !== -1;
+  var glitterMatch = t.match(new RegExp(label + ' 글리터·자석 x(\\d+)'));
+  var hasGlitterEach = !!glitterMatch;
+  var glitterQty = glitterMatch ? glitterMatch[1] : '1';
+  var hasGlitterAll = t.indexOf(label + ' 글리터(전체)') !== -1;
+  var hasStrongGel = t.indexOf(label + ' 튼튼이(빌더젤)') !== -1;
+  var hasOtherRemoval = t.indexOf(label + ' 타샵제거') !== -1;
+  var wrappingMatch = t.match(new RegExp(label + ' 랩핑 x(\\d+)'));
+  var hasWrappingEach = !!wrappingMatch;
+  var wrappingQty = wrappingMatch ? wrappingMatch[1] : '1';
+  return '' +
+  '<div style="flex:1 1 220px;display:flex;flex-direction:column;gap:6px;padding:8px;border:1px solid var(--border);border-radius:8px;">' +
+    '<span style="font-size:13px;font-weight:600;color:var(--text);">' + label + ' 케어 항목</span>' +
+    '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);">' +
+      '<input type="checkbox" name="' + p + 'basic_care" ' + (hasCare ? 'checked' : '') + '> 기본케어' +
+    '</label>' +
+    '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);">' +
+      '<input type="checkbox" name="' + p + 'basic_onecolor" ' + (hasOneColor ? 'checked' : '') + '> 기본(원컬러)' +
+    '</label>' +
+    '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:5px;font-size:14px;color:var(--text);flex-wrap:nowrap;white-space:nowrap;">' +
+      '<input type="checkbox" name="' + p + 'glitter_each" ' + (hasGlitterEach ? 'checked' : '') + '> 글리터·자석 수량 ' +
+      '<input type="number" name="' + p + 'glitter_qty" min="1" step="1" value="' + glitterQty + '" style="width:38px;padding:3px 4px;flex:0 0 38px;">' +
+    '</label>' +
+    '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);">' +
+      '<input type="checkbox" name="' + p + 'glitter_all" ' + (hasGlitterAll ? 'checked' : '') + '> 글리터(전체)' +
+    '</label>' +
+    (part.key !== 'foot' ?
+    '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);">' +
+      '<input type="checkbox" name="' + p + 'strong_gel" ' + (hasStrongGel ? 'checked' : '') + '> 튼튼이(빌더젤) (' + won(STRONG_GEL_PRICE) + ')' +
+    '</label>' : '') +
+    '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);">' +
+      '<input type="checkbox" name="' + p + 'other_removal" ' + (hasOtherRemoval ? 'checked' : '') + '> 타샵제거 (' + won(OTHER_SHOP_REMOVE_PRICE) + ')' +
+    '</label>' +
+    '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:5px;font-size:14px;color:var(--text);flex-wrap:nowrap;white-space:nowrap;">' +
+      '<input type="checkbox" name="' + p + 'wrapping_each" ' + (hasWrappingEach ? 'checked' : '') + '> 랩핑(개당 ' + won(WRAPPING_UNIT_PRICE) + ') 수량 ' +
+      '<input type="number" name="' + p + 'wrapping_qty" min="1" step="1" value="' + wrappingQty + '" style="width:38px;padding:3px 4px;flex:0 0 38px;">' +
+    '</label>' +
+  '</div>';
 }
 
 function renderCareItemOptions(treatmentStr) {
   var t = treatmentStr || '';
-  var hasCare = t.indexOf('기본케어') !== -1;
-  var hasOneColor = t.indexOf('기본(원컬러)') !== -1;
-  var glitterMatch = t.match(/글리터·자석 x(\d+)/);
-  var hasGlitterEach = !!glitterMatch;
-  var glitterQty = glitterMatch ? glitterMatch[1] : '1';
-  var hasGlitterAll = t.indexOf('글리터(전체)') !== -1;
-  var hasStrongGel = t.indexOf('튼튼이(빌더젤)') !== -1;
-  var hasOtherRemoval = t.indexOf('타샵제거') !== -1;
-  var wrappingMatch = t.match(/랩핑 x(\d+)/);
-  var hasWrappingEach = !!wrappingMatch;
-  var wrappingQty = wrappingMatch ? wrappingMatch[1] : '1';
   return '' +
-  '<div style="width:100%;display:flex;flex-direction:column;gap:6px;">' +
+  '<div style="width:100%;display:flex;flex-direction:column;gap:8px;">' +
     '<span style="font-size:13px;color:var(--text-muted);">케어 항목</span>' +
+    '<div style="display:flex;gap:10px;flex-wrap:wrap;">' +
+      CARE_PARTS.map(function (part) { return renderCarePartOptions(t, part); }).join('') +
+    '</div>' +
+  '</div>';
+}
+
+function renderCarePartOptionsSimple(t, part) {
+  var label = part.label;
+  var p = 'care_' + part.key + '_';
+  var hasCare = t.indexOf(label + ' 기본케어') !== -1;
+  var hasOneColor = t.indexOf(label + ' 기본(원컬러)') !== -1;
+  var hasGlitter = new RegExp(label + ' 글리터·자석 x\\d+').test(t) || t.indexOf(label + ' 글리터(전체)') !== -1 || t.indexOf(label + ' 글리터') !== -1;
+  var hasStrongGel = t.indexOf(label + ' 튼튼이(빌더젤)') !== -1;
+  var hasOtherRemoval = t.indexOf(label + ' 타샵제거') !== -1;
+  var hasWrappingEach = new RegExp(label + ' 랩핑 x\\d+').test(t) || t.indexOf(label + ' 랩핑') !== -1;
+  return '' +
+  '<div style="flex:1 1 220px;display:flex;flex-direction:column;gap:6px;padding:8px;border:1px solid var(--border);border-radius:8px;">' +
+    '<span style="font-size:13px;font-weight:600;color:var(--text);">' + label + ' 케어 항목</span>' +
     '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);">' +
-      '<input type="checkbox" name="care_basic_care" ' + (hasCare ? 'checked' : '') + '> 기본케어' +
+      '<input type="checkbox" name="' + p + 'basic_care" ' + (hasCare ? 'checked' : '') + '> 기본케어' +
     '</label>' +
     '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);">' +
-      '<input type="checkbox" name="care_basic_onecolor" ' + (hasOneColor ? 'checked' : '') + '> 기본(원컬러)' +
-    '</label>' +
-    '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);flex-wrap:wrap;">' +
-      '<input type="checkbox" name="care_glitter_each" ' + (hasGlitterEach ? 'checked' : '') + '> 글리터·자석 수량 ' +
-      '<input type="number" name="care_glitter_qty" min="1" step="1" value="' + glitterQty + '" style="width:60px;padding:4px 6px;">' +
+      '<input type="checkbox" name="' + p + 'basic_onecolor" ' + (hasOneColor ? 'checked' : '') + '> 기본(원컬러)' +
     '</label>' +
     '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);">' +
-      '<input type="checkbox" name="care_glitter_all" ' + (hasGlitterAll ? 'checked' : '') + '> 글리터(전체)' +
+      '<input type="checkbox" name="' + p + 'glitter" ' + (hasGlitter ? 'checked' : '') + '> 글리터' +
+    '</label>' +
+    (part.key !== 'foot' ?
+    '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);">' +
+      '<input type="checkbox" name="' + p + 'strong_gel" ' + (hasStrongGel ? 'checked' : '') + '> 튼튼이(빌더젤)' +
+    '</label>' : '') +
+    '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);">' +
+      '<input type="checkbox" name="' + p + 'other_removal" ' + (hasOtherRemoval ? 'checked' : '') + '> 타샵제거' +
     '</label>' +
     '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);">' +
-      '<input type="checkbox" name="care_strong_gel" ' + (hasStrongGel ? 'checked' : '') + '> 튼튼이(빌더젤) (' + won(STRONG_GEL_PRICE) + ')' +
-    '</label>' +
-    '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);">' +
-      '<input type="checkbox" name="care_other_removal" ' + (hasOtherRemoval ? 'checked' : '') + '> 타샵제거 (' + won(OTHER_SHOP_REMOVE_PRICE) + ')' +
-    '</label>' +
-    '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);flex-wrap:wrap;">' +
-      '<input type="checkbox" name="care_wrapping_each" ' + (hasWrappingEach ? 'checked' : '') + '> 랩핑(개당 ' + won(WRAPPING_UNIT_PRICE) + ') 수량 ' +
-      '<input type="number" name="care_wrapping_qty" min="1" step="1" value="' + wrappingQty + '" style="width:60px;padding:4px 6px;">' +
+      '<input type="checkbox" name="' + p + 'wrapping_each" ' + (hasWrappingEach ? 'checked' : '') + '> 랩핑' +
     '</label>' +
   '</div>';
 }
 
 function renderCareItemOptionsSimple(treatmentStr) {
   var t = treatmentStr || '';
-  var hasCare = t.indexOf('기본케어') !== -1;
-  var hasOneColor = t.indexOf('기본(원컬러)') !== -1;
-  var hasGlitter = /글리터·자석 x\d+/.test(t) || t.indexOf('글리터(전체)') !== -1 || t.indexOf('글리터') !== -1;
-  var hasStrongGel = t.indexOf('튼튼이(빌더젤)') !== -1;
-  var hasOtherRemoval = t.indexOf('타샵제거') !== -1;
-  var hasWrappingEach = /랩핑 x\d+/.test(t);
   return '' +
-  '<div style="width:100%;display:flex;flex-direction:column;gap:6px;">' +
+  '<div style="width:100%;display:flex;flex-direction:column;gap:8px;">' +
     '<span style="font-size:13px;color:var(--text-muted);">케어 항목</span>' +
-    '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);">' +
-      '<input type="checkbox" name="care_basic_care" ' + (hasCare ? 'checked' : '') + '> 기본케어' +
+    '<div style="display:flex;gap:10px;flex-wrap:wrap;">' +
+      CARE_PARTS.map(function (part) { return renderCarePartOptionsSimple(t, part); }).join('') +
+    '</div>' +
+  '</div>';
+}
+
+function renderNailPartOptions(part, isMember) {
+  var label = part.label;
+  var p = 'item_' + part.key + '_';
+  var careLabel = '기본케어 (' + won(nailItemUnitPrice(part.key, 'basic_care', isMember)) + ')';
+  var oneColorLabel = '기본(원컬러) (' + won(nailItemUnitPrice(part.key, 'basic_onecolor', isMember)) + ')';
+  return '' +
+  '<div style="flex:1 1 220px;display:flex;flex-direction:column;gap:6px;padding:8px;border:1px solid var(--border);border-radius:8px;">' +
+    '<span style="font-size:12px;font-weight:600;color:var(--text);">' + label + ' 네일 항목</span>' +
+    '<label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text);">' +
+      '<input type="checkbox" name="' + p + 'basic_care" onchange="updateDayDeductAmount(this.form)"> ' + careLabel +
     '</label>' +
-    '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);">' +
-      '<input type="checkbox" name="care_basic_onecolor" ' + (hasOneColor ? 'checked' : '') + '> 기본(원컬러)' +
+    '<label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text);">' +
+      '<input type="checkbox" name="' + p + 'basic_onecolor" onchange="updateDayDeductAmount(this.form)"> ' + oneColorLabel +
     '</label>' +
-    '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);">' +
-      '<input type="checkbox" name="care_glitter" ' + (hasGlitter ? 'checked' : '') + '> 글리터' +
+    '<label style="display:flex;align-items:center;gap:5px;font-size:13px;color:var(--text);flex-wrap:nowrap;white-space:nowrap;">' +
+      '<input type="checkbox" name="' + p + 'glitter_each" onchange="updateDayDeductAmount(this.form)"> 글리터·자석(개당 ' + won(GLITTER_UNIT_PRICE) + ') 수량 ' +
+      '<input type="number" name="' + p + 'glitter_qty" min="1" step="1" value="1" style="width:38px;padding:3px 4px;flex:0 0 38px;" oninput="updateDayDeductAmount(this.form)">' +
     '</label>' +
-    '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);">' +
-      '<input type="checkbox" name="care_strong_gel" ' + (hasStrongGel ? 'checked' : '') + '> 튼튼이(빌더젤)' +
+    '<label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text);">' +
+      '<input type="checkbox" name="' + p + 'glitter_all" onchange="updateDayDeductAmount(this.form)"> 글리터(전체) (' + won(GLITTER_ALL_PRICE) + ')' +
     '</label>' +
-    '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);">' +
-      '<input type="checkbox" name="care_other_removal" ' + (hasOtherRemoval ? 'checked' : '') + '> 타샵제거' +
+    (part.key !== 'foot' ?
+    '<label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text);">' +
+      '<input type="checkbox" name="' + p + 'strong_gel" onchange="updateDayDeductAmount(this.form)"> 튼튼이(빌더젤) (' + won(STRONG_GEL_PRICE) + ')' +
+    '</label>' : '') +
+    '<label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text);">' +
+      '<input type="checkbox" name="' + p + 'other_removal" onchange="updateDayDeductAmount(this.form)"> 타샵제거 (' + won(OTHER_SHOP_REMOVE_PRICE) + ')' +
     '</label>' +
-    '<label style="flex:0 0 auto;flex-direction:row;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);">' +
-      '<input type="checkbox" name="care_wrapping_each" ' + (hasWrappingEach ? 'checked' : '') + '> 랩핑' +
+    '<label style="display:flex;align-items:center;gap:5px;font-size:13px;color:var(--text);flex-wrap:nowrap;white-space:nowrap;">' +
+      '<input type="checkbox" name="' + p + 'wrapping_each" onchange="updateDayDeductAmount(this.form)"> 랩핑(개당 ' + won(WRAPPING_UNIT_PRICE) + ') 수량 ' +
+      '<input type="number" name="' + p + 'wrapping_qty" min="1" step="1" value="1" style="width:38px;padding:3px 4px;flex:0 0 38px;" oninput="updateDayDeductAmount(this.form)">' +
     '</label>' +
   '</div>';
 }
 
 function renderNailItemOptions(isMember) {
-  var careLabel = '기본케어 (' + won(nailItemUnitPrice('basic_care', isMember)) + ')';
-  var oneColorLabel = '기본(원컬러) (' + won(nailItemUnitPrice('basic_onecolor', isMember)) + ')';
   return '' +
-  '<div style="width:100%;display:flex;flex-direction:column;gap:6px;">' +
+  '<div style="width:100%;display:flex;flex-direction:column;gap:8px;">' +
     '<span style="font-size:12px;color:var(--text-muted);">네일 항목</span>' +
-    '<label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text);">' +
-      '<input type="checkbox" name="item_basic_care" onchange="updateDayDeductAmount(this.form)"> ' + careLabel +
-    '</label>' +
-    '<label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text);">' +
-      '<input type="checkbox" name="item_basic_onecolor" onchange="updateDayDeductAmount(this.form)"> ' + oneColorLabel +
-    '</label>' +
-    '<label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text);flex-wrap:wrap;">' +
-      '<input type="checkbox" name="item_glitter_each" onchange="updateDayDeductAmount(this.form)"> 글리터·자석(개당 ' + won(GLITTER_UNIT_PRICE) + ') 수량 ' +
-      '<input type="number" name="glitter_qty" min="1" step="1" value="1" style="width:60px;padding:4px 6px;" oninput="updateDayDeductAmount(this.form)">' +
-    '</label>' +
-    '<label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text);">' +
-      '<input type="checkbox" name="item_glitter_all" onchange="updateDayDeductAmount(this.form)"> 글리터(전체) (' + won(GLITTER_ALL_PRICE) + ')' +
-    '</label>' +
-    '<label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text);">' +
-      '<input type="checkbox" name="item_strong_gel" onchange="updateDayDeductAmount(this.form)"> 튼튼이(빌더젤) (' + won(STRONG_GEL_PRICE) + ')' +
-    '</label>' +
-    '<label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text);">' +
-      '<input type="checkbox" name="item_other_removal" onchange="updateDayDeductAmount(this.form)"> 타샵제거 (' + won(OTHER_SHOP_REMOVE_PRICE) + ')' +
-    '</label>' +
-    '<label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text);flex-wrap:wrap;">' +
-      '<input type="checkbox" name="item_wrapping_each" onchange="updateDayDeductAmount(this.form)"> 랩핑(개당 ' + won(WRAPPING_UNIT_PRICE) + ') 수량 ' +
-      '<input type="number" name="wrapping_qty" min="1" step="1" value="1" style="width:60px;padding:4px 6px;" oninput="updateDayDeductAmount(this.form)">' +
-    '</label>' +
+    '<div style="display:flex;gap:10px;flex-wrap:wrap;">' +
+      CARE_PARTS.map(function (part) { return renderNailPartOptions(part, isMember); }).join('') +
+    '</div>' +
   '</div>';
 }
 
@@ -807,6 +1269,12 @@ function toggleSaleType(radio) {
   var isMember = radio.value === 'member' && radio.checked;
   form.querySelector('.member-field').style.display = isMember ? 'block' : 'none';
   form.querySelector('.nonmember-field').style.display = isMember ? 'none' : 'block';
+}
+function toggleCustomerType(radio) {
+  var form = radio.closest('form');
+  var isMember = radio.value === 'member' && radio.checked;
+  var field = form.querySelector('.membership-field');
+  if (field) field.style.display = isMember ? 'block' : 'none';
 }
 function setFilterPeriod(v) { ui.filterPeriod = v; renderApp(); }
 function setFilterType(v) { ui.filterType = v; renderApp(); }
@@ -900,12 +1368,11 @@ function renderSalesTab() {
       '<td>' + escapeHtml(s.customerName || '-') + '</td>' +
       (showCareCol ? '<td>' + escapeHtml(s.treatment) + '</td>' : '') +
       '<td>' + won(s.amount) + '</td>' +
-      '<td>' + (s.payment || '-') + '</td>' +
       '<td class="col-action">' + (confirming ?
         '<button class="btn-text danger" data-action="confirm-delete-sale" data-id="' + s.id + '">삭제</button><button class="btn-text" data-action="cancel-delete">취소</button>' :
         '<button class="btn-text" data-action="delete-sale" data-id="' + s.id + '">삭제</button>') + '</td>' +
     '</tr>';
-  }).join('') || '<tr><td colspan="' + (showCareCol ? 7 : 6) + '" class="empty-cell">등록된 매출이 없어요. 위에서 새 매출을 추가해보세요.</td></tr>';
+  }).join('') || '<tr><td colspan="' + (showCareCol ? 6 : 5) + '" class="empty-cell">등록된 매출이 없어요. 위에서 새 매출을 추가해보세요.</td></tr>';
 
   return '' +
   '<section class="tab-content">' +
@@ -939,7 +1406,7 @@ function renderSalesTab() {
         }).join('') +
       '</div>' +
     '</div>' +
-    '<div class="table-wrap"><table><thead><tr><th>날짜</th><th>구분</th><th>고객명</th>' + (showCareCol ? '<th>케어 내역</th>' : '') + '<th>금액</th><th>결제</th><th class="col-action"></th></tr></thead>' +
+    '<div class="table-wrap"><table><thead><tr><th>날짜</th><th>구분</th><th>고객명</th>' + (showCareCol ? '<th>케어 내역</th>' : '') + '<th>금액</th><th class="col-action"></th></tr></thead>' +
     '<tbody>' + rows + '</tbody></table></div>' +
   '</section>';
 }
@@ -951,13 +1418,17 @@ function renderCustomerForm() {
   return '' +
   '<form id="customer-form" class="card form-card">' +
     '<div class="seg-field"><label>구분</label><div class="segmented">' +
-      '<label><input type="radio" name="customerType" value="member" ' + (custType === 'member' ? 'checked' : '') + '> 회원</label>' +
-      '<label><input type="radio" name="customerType" value="nonmember" ' + (custType === 'nonmember' ? 'checked' : '') + '> 비회원</label>' +
+      '<label><input type="radio" name="customerType" value="member" ' + (custType === 'member' ? 'checked' : '') + ' onchange="toggleCustomerType(this)"> 회원</label>' +
+      '<label><input type="radio" name="customerType" value="nonmember" ' + (custType === 'nonmember' ? 'checked' : '') + ' onchange="toggleCustomerType(this)"> 비회원</label>' +
     '</div></div>' +
     '<div class="form-row">' +
       '<label>이름<input type="text" name="name" required value="' + (editing ? escapeHtml(editing.name) : '') + '"></label>' +
       '<label>연락처<input type="tel" name="phone" placeholder="010-0000-0000" value="' + (editing ? escapeHtml(editing.phone || '') : '') + '"></label>' +
     '</div>' +
+    (editing ? '' :
+    '<div class="membership-field" style="display:' + (custType === 'member' ? 'block' : 'none') + ';">' +
+      '<label>멤버십 금액 (선택)<input type="text" inputmode="numeric" name="membershipAmount" placeholder="0" oninput="formatAmountInput(this)"></label>' +
+    '</div>') +
     (ui.customerFormError ? '<div style="font-size:13px;color:var(--danger);">' + escapeHtml(ui.customerFormError) + '</div>' : '') +
     '<div class="form-actions">' +
       '<button type="button" class="btn ghost" data-action="close-customer-form">취소</button>' +
@@ -1595,7 +2066,22 @@ function handleCustomerSubmit(form) {
       c.name = name; c.phone = phone; c.type = type;
     }
   } else {
-    state.customers.push({ id: uid(), name: name, phone: phone, firstVisit: todayStr(), type: type, createdAt: Date.now() });
+    var newId = uid();
+    state.customers.push({ id: newId, name: name, phone: phone, firstVisit: todayStr(), type: type, createdAt: Date.now() });
+    if (type === 'member') {
+      var membershipAmount = parseAmountValue(fd.get('membershipAmount'));
+      if (membershipAmount > 0) {
+        var chargeLogId = uid();
+        state.chargeLogs.push({
+          id: chargeLogId, customerId: newId, type: 'charge',
+          date: todayStr(), amount: membershipAmount, createdAt: Date.now()
+        });
+        state.sales.push({
+          id: uid(), date: todayStr(), type: '회원', isMembership: true, customerId: newId, customerName: name,
+          treatment: 'MEMBERSHIP', amount: membershipAmount, payment: '', createdAt: Date.now(), chargeLogId: chargeLogId
+        });
+      }
+    }
   }
   ui.customerFormOpen = false;
   ui.editingCustomerId = null;
